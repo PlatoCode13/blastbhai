@@ -276,6 +276,17 @@ nav a[hidden]{display:none}
 #rulesframe{width:100%;height:calc(100vh - 220px);min-height:520px;border:1px solid var(--line);border-radius:16px;background:#000;display:block}
 /* results */
 .rday{font:800 italic 22px "Barlow Condensed",sans-serif;text-transform:uppercase;margin:22px 0 10px}
+.brow{display:grid;grid-template-columns:5.5em minmax(0,1fr) auto;gap:10px;align-items:center;border-radius:14px;padding:9px 12px;margin-bottom:8px;border:1px dashed rgba(255,194,61,.45);background:repeating-linear-gradient(135deg,rgba(255,194,61,.09) 0 10px,rgba(255,194,61,.03) 10px 20px)}
+.brow time{font:800 italic 20px "Barlow Condensed",sans-serif;color:var(--gold)}
+.brow b{font-weight:700;color:var(--ink)}.brow b i{font-style:normal;margin-right:6px}
+.brow span{color:var(--mut);font-size:14px;text-align:right}
+.brow.now{border-style:solid;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.lvbrk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-radius:18px;padding:14px 18px;margin-bottom:18px;border:1px dashed rgba(255,194,61,.5);background:repeating-linear-gradient(135deg,rgba(255,194,61,.10) 0 12px,rgba(255,194,61,.03) 12px 24px)}
+.lvbrk[hidden]{display:none}
+.lvbrk .bi{font-size:28px}.lvbrk .bt{font:800 italic 26px "Barlow Condensed",sans-serif;text-transform:uppercase;color:var(--gold)}
+.lvbrk .bs{color:var(--ink);font-weight:600}.lvbrk .bw{margin-left:auto;color:var(--mut);font-size:14px}
+.lvbrk.now{border-style:solid;border-color:var(--gold);background:linear-gradient(90deg,rgba(255,194,61,.22),rgba(255,194,61,.06))}
+.syncst{font-size:13px;color:var(--mut);margin:6px 0 0}.syncst.ok{color:var(--green)}.syncst.bad{color:var(--bad)}
 .ritem{display:grid;grid-template-columns:5.5em minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--panel);border-radius:14px;padding:10px 12px;margin-bottom:8px}
 .ritem.done{background:rgba(65,224,111,.06)}
 .ritem time{font:800 italic 20px/1 "Barlow Condensed",sans-serif}
@@ -578,6 +589,7 @@ h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-trans
       <div class="lvstat"><h2 id="lvtitle"></h2><div class="cd" id="lvcd" role="timer" hidden></div><p id="lvsub"></p></div>
       <button class="btn" id="lvfs" type="button">Full screen</button>
     </div>
+    <div class="lvbrk" id="lvbrk" hidden role="status"></div>
     <div class="fields" id="lvfields"></div>
     <div class="lvgrid">
       <div><h3 class="sh">Latest results</h3><div id="lvres"></div></div>
@@ -703,9 +715,10 @@ h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-trans
         <div class="brk2"><div><b class="bh">Day 1 breaks</b><div id="br0"></div><button class="btn sm" type="button" data-add="0">Add break</button></div>
           <div><b class="bh">Day 2 breaks</b><div id="br1"></div><button class="btn sm" type="button" data-add="1">Add break</button></div></div>
         <p class="fine" id="dpinfo"></p>
+        <p class="syncst" id="syncst" aria-live="polite"></p>
         <button class="btn sm" id="dpreset" type="button">Back to the plan defaults</button></div>
     </div>
-    <p class="fine">Saved on this device for now. Once the Control Room is live, these settings sync to the whole crew and only admins can change them.</p>
+    <p class="fine">Match day plan, match length, turnover and knockout format are shared live with everyone: a change here shows on every phone and screen within a minute. Other settings stay on this device.</p>
   </section>
 <section id="v-teams" hidden>
   <div class="picker" id="picker" role="group" aria-label="Choose a team"></div>
@@ -813,10 +826,12 @@ const pick=(o,ks)=>Object.fromEntries(ks.filter(k=>k in o).map(k=>[k,o[k]]));
    DK.forEach(k=>delete L[k]);S=Object.assign(S,L)}
  const dr=D&&Array.isArray(D.order)?D:O&&Array.isArray(O.order)?O:null;if(dr)Object.assign(S,dr);
 }
-const save=()=>{const st={},dr={};for(const k in S)(DK.includes(k)?dr:st)[k]=S[k];
+let onSaved=()=>{};
+const save=()=>{const st={},dr={};for(const k in S)(DK.includes(k)?dr:st)[k]=S[k];onSavedLater();
   try{localStorage.setItem('icb26-v3',JSON.stringify(st))}catch(e){}
   try{sessionStorage.setItem(DSK,JSON.stringify(dr))}catch(e){}
   if(S.drawDone&&S.drawKind==='official'){try{localStorage.setItem(OK,JSON.stringify(dr))}catch(e){}}};
+function onSavedLater(){setTimeout(()=>onSaved(),0)}
 const dropOfficial=()=>{try{localStorage.removeItem(OK)}catch(e){}};
 const quickDraw=mode=>{const pool=mode==='quota'?[...shuffle(HOME),...shuffle(AWAY)]:shuffle(T.map(t=>t.id));return pool.map((id,i)=>({id,g:i%2?'B':'A'}))};
 const split=order=>({A:order.filter(o=>o.g==='A').map(o=>o.id),B:order.filter(o=>o.g==='B').map(o=>o.id)});
@@ -1456,6 +1471,14 @@ function koSides(m,st){
   return m.d.map(id=>({lab:'Winner '+id,t:win(id)}));
 }
 const matchesAll=()=>{const r=build(S.final,OPT());return r.used.filter(x=>x.m)};
+/* ---------- breaks in every match list ---------- */
+const breaksAll=()=>build(S.final,OPT()).used.filter(x=>x.brk&&x.brk.m>0);
+const brIcon=l=>/prayer|namaz|নামাজ|dhuhr|asr|maghrib|isha/i.test(l)?'🕌':/lunch|food|খাবার/i.test(l)?'🍽️':/prize|closing|award/i.test(l)?'🏆':'☕';
+function brkNow(b){const ni=nowInfo();return ni.di===b.day&&ni.min>=b.t&&ni.min<b.t+b.brk.m}
+const brkRow=b=>`<div class="brow${brkNow(b)?' now':''}"><time>${hm(b.t)}</time><b><i>${brIcon(b.brk.l)}</i>${esc(b.brk.l)}</b><span>${b.brk.m} min · until ${hm(b.t+b.brk.m)}</span></div>`;
+// day rows (with a time t) + that day's breaks, in time order; breaks first on a tie
+function withBreaks(di,rows,rowHTML){const bs=breaksAll().filter(b=>b.day===di).map(b=>({t:b.t,b}));
+  return [...bs,...rows.map(x=>({t:x.s.t,x}))].sort((p,q)=>p.t-q.t||(p.b?-1:1)).map(z=>z.b?brkRow(z.b):rowHTML(z.x)).join('')}
 const stOf=(r)=>!r?'':r.w?'done':r.st||'';
 const stLabel={done:'Result',live:'Live',delayed:'Delayed',abandoned:'Abandoned'};
 const DAYDATE=[new Date(2026,11,26),new Date(2026,11,27)];
@@ -1485,6 +1508,10 @@ function renderLive(){
   else if(done>=total){title='That’s a wrap';sub='All matches played. Thank you, Hamburg!'}
   else{title=`${done} of ${total} matches played`;sub=ni.di>=0?DAYS[ni.di].l:'Indoor Cricket Blast 2026'}
   $('#lvtitle').textContent=title;$('#lvsub').textContent=sub;if(pre)tickCD();
+  {const bk=$('#lvbrk'),today=pre||ni.di<0?[]:breaksAll().filter(b=>b.day===ni.di),cur=today.find(brkNow),nx=today.find(b=>b.t>ni.min);
+   const b=cur||(done<total?nx:null);bk.hidden=!b;bk.classList.toggle('now',!!cur);
+   if(b)bk.innerHTML=cur?`<span class="bi">${brIcon(b.brk.l)}</span><span class="bt">Break now</span><span class="bs">${esc(b.brk.l)}</span><span class="bw">Play resumes ${hm(b.t+b.brk.m)}</span>`
+     :`<span class="bi">${brIcon(b.brk.l)}</span><span class="bt">Next break ${hm(b.t)}</span><span class="bs">${esc(b.brk.l)}</span><span class="bw">${b.brk.m} min · until ${hm(b.t+b.brk.m)}</span>`}
   // per field: live or next
   const cards=[0,1].map(fi=>{
     const list=all.map(s=>({s,m:s.m[fi]})).filter(x=>x.m);
@@ -1525,15 +1552,15 @@ function offLine(x){if(isSlots())return x.m.k==='g'?'Officials: assigned after t
 function renderAllFixtures(){
   const st=standings(),all=matchesAll();
   $('#allfx').innerHTML=[0,1].map(di=>{const rows=all.filter(s=>s.day===di).flatMap(s=>s.m.map((m,fi)=>m?{s,m,fi}:null).filter(Boolean));
-    return `<h3 class="rday">${DAYS[di].l}</h3>`+rows.map(x=>{const r=S.res[keyOf(x.m)]||{},sd=sidesOf(x.m,st),t=stOf(r);
-      return `<div class="ritem${r.w?' done':''}"><time>${hm(x.s.t)}<small>Field ${x.fi+1}</small></time><div><div class="mt" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-weight:600">${x.m.k==='g'?`<b class="gt ${x.m.g.toLowerCase()}">${x.m.g}</b>`:`<b class="st">${x.m.l}</b>`}${sd.map(z=>z.t?`<span style="display:inline-flex;align-items:center;gap:5px;${r.w===z.t?'color:var(--green)':''}">${logo(z.t,24)}${esc(by[z.t].s)}</span>`:`<span style="color:var(--mut)">${esc(z.lab)}</span>`).join('<i style="color:var(--mut);font-style:normal">v</i>')}</div><div class="fine" style="margin-top:3px">${offLine(x)}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${t?`<span class="st ${t}">${stLabel[t]}</span>`:''}${r.url&&/^https:\/\//.test(r.url)?`<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--green);font-size:13px;font-weight:600">CricHeroes</a>`:''}</div></div>`}).join('')}).join('');
+    return `<h3 class="rday">${DAYS[di].l}</h3>`+withBreaks(di,rows,x=>{const r=S.res[keyOf(x.m)]||{},sd=sidesOf(x.m,st),t=stOf(r);
+      return `<div class="ritem${r.w?' done':''}"><time>${hm(x.s.t)}<small>Field ${x.fi+1}</small></time><div><div class="mt" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-weight:600">${x.m.k==='g'?`<b class="gt ${x.m.g.toLowerCase()}">${x.m.g}</b>`:`<b class="st">${x.m.l}</b>`}${sd.map(z=>z.t?`<span style="display:inline-flex;align-items:center;gap:5px;${r.w===z.t?'color:var(--green)':''}">${logo(z.t,24)}${esc(by[z.t].s)}</span>`:`<span style="color:var(--mut)">${esc(z.lab)}</span>`).join('<i style="color:var(--mut);font-style:normal">v</i>')}</div><div class="fine" style="margin-top:3px">${offLine(x)}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${t?`<span class="st ${t}">${stLabel[t]}</span>`:''}${r.url&&/^https:\/\//.test(r.url)?`<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--green);font-size:13px;font-weight:600">CricHeroes</a>`:''}</div></div>`})}).join('');
 }
 
 /* ---------- admin: results ---------- */
 function renderResults(){
   if(isSlots()){$('#reslist').innerHTML='<div class="acard wide predraw"><h3>Results open after the draw</h3><p class="fine" style="margin:0">Right now the schedule shows slots (A1 v A3). Once the draw is done, every match is here, ready for scores.</p></div>';return}
   const st=standings(),all=matchesAll();
-  $('#reslist').innerHTML=[0,1].map(di=>`<h3 class="rday">${DAYS[di].l}</h3>`+all.filter(s=>s.day===di).flatMap(s=>s.m.map((m,fi)=>m?{s,m,fi}:null).filter(Boolean)).map(x=>{
+  $('#reslist').innerHTML=[0,1].map(di=>`<h3 class="rday">${DAYS[di].l}</h3>`+withBreaks(di,all.filter(s=>s.day===di).flatMap(s=>s.m.map((m,fi)=>m?{s,m,fi}:null).filter(Boolean)),x=>{
     const k=keyOf(x.m),r=S.res[k]||{},sd=sidesOf(x.m,st),ready=sd.every(z=>z.t);
     const sv=t=>r.s&&r.s[t]?r.s[t]:{r:'',o:''};
     return `<div class="ritem${r.w?' done':''}" data-k="${k}" data-a="${sd[0].t||''}" data-b="${sd[1].t||''}" data-ko="${x.m.k==='ko'?1:''}"><time>${hm(x.s.t)}<small>Field ${x.fi+1} · ${x.m.k==='g'?'Group '+x.m.g:x.m.l}</small></time>
@@ -1542,7 +1569,7 @@ function renderResults(){
       ${ready?`<div class="rmore">${sd.map(z=>`<span class="tsc"><span>${esc(by[z.t].s)}</span><input class="n" inputmode="numeric" data-t="${z.t}" data-f="r" value="${esc(sv(z.t).r)}" placeholder="runs" aria-label="${esc(by[z.t].s)} runs"><input class="n" inputmode="decimal" data-t="${z.t}" data-f="o" value="${esc(sv(z.t).o)}" placeholder="overs" aria-label="${esc(by[z.t].s)} overs"><button type="button" class="ao" data-t="${z.t}" aria-pressed="${!!sv(z.t).ao}" title="8 wickets down (9 players a side)">All out</button></span>`).join('')}<input class="u" data-f="url" value="${esc(r.url||'')}" placeholder="CricHeroes match link" aria-label="CricHeroes match link"></div>
       <div class="rissue" role="status"></div>
       <div class="rmom"${r.w?'':' hidden'}><span>⭐ Man of the Match</span><input class="mn" data-f="mom" value="${esc(r.mom||'')}" placeholder="Player name (from CricHeroes)" autocomplete="off" aria-label="Man of the Match"><select class="mt2" data-f="momt" aria-label="Player's team">${sd.map(z=>`<option value="${z.t}"${(r.momt||(r.w&&r.w!=='N'?r.w:''))===z.t?' selected':''}>${esc(by[z.t].s)}</option>`).join('')}</select><button type="button" class="btn mshare"${r.mom&&r.mom.trim()?'':' disabled'}>Share poster</button><span class="mmsg" role="status"></span></div>`:''}
-    </div>`}).join('')).join('');
+    </div>`})).join('');
   document.querySelectorAll('#reslist .ritem').forEach(paintRow);
 }
 function paintRow(row){const k=row.dataset.k,a=row.dataset.a,b=row.dataset.b,r=S.res[k]||{};
@@ -1581,14 +1608,16 @@ function offNames(){
   }));
   return map;
 }
+function offRows(all){const g=all.filter(s=>s.gi!=null),inside=b=>g.some(s=>s.day===b.day&&s.t<b.t)&&g.some(s=>s.day===b.day&&s.t>b.t);
+  return [...g.map(s=>({d:s.day,t:s.t,s})),...breaksAll().filter(inside).map(b=>({d:b.day,t:b.t,b}))].sort((p,q)=>p.d-q.d||p.t-q.t||(p.b?-1:1))}
 function renderOfficials(){
   if(isSlots()){$('#offsum').innerHTML='';$('#offlist').innerHTML='<div class="acard wide predraw"><h3>Officials come after the draw</h3><p class="fine" style="margin:0">Who officiates depends on who plays when, so duties are assigned the moment the 12 teams are drawn. Add the names below now.</p></div>';renderRoster();return}
   const pl=ensurePlan(),d=S.final,all=matchesAll(),nm=offNames(),sp=pl.sp;
   const plays=i=>new Set((pl.slots[i]||[]).flatMap(m=>m.p)),cnt={},adj={};
   const aft={};pl.off.forEach((row,i)=>row.forEach(o=>{const bef=new Set(i+1!==sp?plays(i+1):[]),af=new Set(i!==sp?plays(i-1):[]);for(const t of [o.u,o.s]){if(!t)continue;cnt[t]=(cnt[t]||0)+1;if(bef.has(t))adj[t]=(adj[t]||0)+1;else if(af.has(t))aft[t]=(aft[t]||0)+1}}));
   $('#offsum').innerHTML=[...HOME,...AWAY].map(t=>`<div class="os${adj[t]?' warn':''}">${logo(t,28)}<b>${cnt[t]||0}</b>${by[t].h?'duties':'scoring'}${adj[t]?`<br>${adj[t]} right before playing`:''}</div>`).join('');
-  $('#offlist').innerHTML=all.filter(s=>s.gi!=null).map(s=>s.m.map((m,fi)=>{const o=pl.off[s.gi][fi],n=nm.get(s.gi+'-'+fi),bef=new Set(s.gi+1!==sp?plays(s.gi+1):[]),af=new Set(s.gi!==sp?plays(s.gi-1):[]);
-    return `<div class="oitem"><time>${hm(s.t)}<small>${DAYS[s.day].l.split(' ')[0]} · Field ${fi+1}</small></time><div class="mt"><b class="gt ${m.g.toLowerCase()}">${m.g}</b>${m.p.map(t=>esc(by[t].s)).join(' v ')}</div><div class="who2">${o.u?logo(o.u,22):''}<span>${esc(n.u.join(', '))}</span><em>${o.u?esc(by[o.u].s):''}</em>${o.u&&bef.has(o.u)?'<span class="adj">plays right after</span>':o.u&&af.has(o.u)?'<span class="adj" style="color:var(--mut)">just played</span>':''}</div><div class="who2">${o.s?logo(o.s,22):''}<span>${esc(n.s)}</span><em>scorer</em></div></div>`}).join('')).join('')+'<p class="fine">Knockout officials are picked at the table check, from teams that are out or not playing.</p>';
+  $('#offlist').innerHTML=offRows(all).map(z=>z.b?brkRow(z.b):(s=>s.m.map((m,fi)=>{const o=pl.off[s.gi][fi],n=nm.get(s.gi+'-'+fi),bef=new Set(s.gi+1!==sp?plays(s.gi+1):[]),af=new Set(s.gi!==sp?plays(s.gi-1):[]);
+    return `<div class="oitem"><time>${hm(s.t)}<small>${DAYS[s.day].l.split(' ')[0]} · Field ${fi+1}</small></time><div class="mt"><b class="gt ${m.g.toLowerCase()}">${m.g}</b>${m.p.map(t=>esc(by[t].s)).join(' v ')}</div><div class="who2">${o.u?logo(o.u,22):''}<span>${esc(n.u.join(', '))}</span><em>${o.u?esc(by[o.u].s):''}</em>${o.u&&bef.has(o.u)?'<span class="adj">plays right after</span>':o.u&&af.has(o.u)?'<span class="adj" style="color:var(--mut)">just played</span>':''}</div><div class="who2">${o.s?logo(o.s,22):''}<span>${esc(n.s)}</span><em>scorer</em></div></div>`}).join(''))(z.s)).join('')+'<p class="fine">Knockout officials are picked at the table check, from teams that are out or not playing.</p>';
   renderRoster();
 }
 function renderRoster(){$('#roster').innerHTML=[...HOME,...AWAY].map(t=>`<label class="rs2">${logo(t,30)}<input data-t="${t}" value="${esc(S.roster[t]||'')}" placeholder="${by[t].h?'e.g. Rafi, Sumon, Tanvir':'e.g. Nayeem'}" aria-label="${esc(by[t].n)} officials"></label>`).join('');}
@@ -1695,6 +1724,25 @@ $('#ownpw').addEventListener('submit',async e=>{e.preventDefault();const m=$('#n
     else m.textContent=r.status===503?'Password storage is not set up on the server yet.':'Could not save. Try again.';
   }catch(err){m.textContent='No connection to the server.'}finally{$('#npsave').disabled=false}
 });
+/* ---------- shared match-day plan (times, breaks, format): one copy for everyone ----------
+   Admins' changes go to /api/plan; every screen checks for a newer plan every minute and when it comes back into view. */
+const PLK=['dp','len','ch','alone','fmt','mpt'],planOf=()=>JSON.stringify(pick(S,PLK));
+let planSynced=null,planV=0,planPush=null;
+function setSync(t,c){const el=$('#syncst');if(el){el.textContent=t;el.className='syncst'+(c?' '+c:'')}}
+function applyPlan(pl,v){const before=planOf();Object.assign(S,JSON.parse(JSON.stringify(pl)));planSynced=planOf();planV=v;
+  if(planSynced!==before){save();route()}setSync('Shared with everyone · updated '+new Date(v).toTimeString().slice(0,5),'ok')}
+async function pullPlan(){try{const r=await api('/plan');const d=r.data;if(!d||!d.ok||planPush)return;
+  if(d.plan&&d.v!==planV)applyPlan(d.plan,d.v);else if(!d.plan&&isAdmin)setSync('Not shared yet: your next change here goes to everyone.','')}catch(e){}}
+async function pushPlan(){planPush=null;const sent=planOf();
+  try{const r=await api('/plan',{plan:JSON.parse(sent)});
+    if(r.data&&r.data.ok){planSynced=sent;planV=r.data.v;setSync('Saved for everyone ✓ '+new Date(r.data.v).toTimeString().slice(0,5),'ok')}
+    else setSync(r.status===401?'Signed out: this change stays on this device. Sign in again.':'Could not share this change. Try again.','bad');
+  }catch(e){setSync('No connection: this change stays on this device for now.','bad')}}
+onSaved=()=>{if(!isAdmin||!auth||!auth.token)return;if(planOf()===planSynced)return;clearTimeout(planPush);planPush=setTimeout(pushPlan,700);setSync('Saving for everyone…','')};
+pullPlan();setInterval(()=>{if(!document.hidden)pullPlan()},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullPlan()});
+// Live page keeps itself current (now / next / breaks) without a reload
+setInterval(()=>{if(!document.hidden&&!$('#v-live').hidden)renderLive()},30000);
 // re-check a saved sign-in with the server (it ends when the admin password changes)
 if(auth&&auth.token)api('/me').then(r=>{if(r.status===401){saveAuth(null);isAdmin=false;route()}else if(r.data&&r.data.ok&&r.data.role!==auth.role){saveAuth({...auth,role:r.data.role,name:r.data.name});route()}}).catch(()=>{});
 $('#asPublic').addEventListener('click',()=>setPublicView(true));

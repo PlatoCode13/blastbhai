@@ -17,10 +17,12 @@ functions/            ← backend (Cloudflare Pages Functions), served under /ap
   api/login.js        ← sign-in (checks passwords on the server)
   api/me.js           ← "am I still signed in?"
   api/admin-password.js ← owner only: change the general admin password
+  api/plan.js         ← shared match-day plan (breaks, times, format): everyone reads, admins save
 lib/auth.js           ← password hashing + signed sign-in tokens
 tools/make-hash.mjs   ← makes a password hash for the Cloudflare secrets
 tests/test_deploy.py  ← 30 deploy checks (pages, images, headers, API, phone)
 tests/test_auth.py    ← 48 login checks (admin, owner, password change, lockout)
+tests/test_breaks.py  ← 28 checks: breaks in every match list, Live break banner, shared plan
 wrangler.toml         ← Cloudflare project settings
 ```
 
@@ -46,6 +48,12 @@ wrangler pages dev --port 8788      # from the repo root
 python3 tests/test_deploy.py        # needs: pip install playwright
 ADMIN_PASS=... OWNER_PASS=... python3 tests/test_auth.py   # + .dev.vars with OWNER_HASH, ADMIN_HASH
 ```
+
+## Breaks and the shared plan
+
+- Breaks (prayer, lunch, buffer…) show in the full schedule, Results and Officials lists, and as a banner on Live ("Break now" / "Next break").
+- Admins change them in Admin → Setup → Match day plan. The change is saved to the server and every open screen picks it up within a minute (Live also refreshes itself every 30 s).
+- Free-plan note: each open screen asks once a minute while visible; fine for match day, watch the Cloudflare usage page.
 
 ## Sign-in
 
