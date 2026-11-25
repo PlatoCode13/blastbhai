@@ -343,6 +343,8 @@ nav a[hidden]{display:none}
 .wbox{width:min(100%,380px);background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--gold);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px;text-align:center;align-items:center;box-shadow:0 0 60px rgba(255,194,61,.18)}
 .wbox img{width:64px;height:64px;border-radius:14px;object-fit:cover}.wbox h2{font-size:32px}.wbox h2 span{color:var(--gold)}.wbox .spin,.wbox .btn{width:100%}
 #lu{text-transform:uppercase}
+.lhint{margin:0;padding:10px 14px;border-radius:12px;border:1px dashed var(--gold);background:rgba(255,194,61,.08);color:var(--ink);font-size:15px;line-height:1.5}
+.lhint[hidden]{display:none}.lhint b{color:var(--gold);font-size:17px}
 #ownpw[hidden]{display:none}
 #ownpw input{font:500 16px Barlow,sans-serif;min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:0 12px}
 .otag{font:700 12px Barlow,sans-serif;color:#111;background:var(--gold);border-radius:8px;padding:2px 8px;vertical-align:middle;margin-left:6px}
@@ -746,6 +748,7 @@ h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-trans
     <h2>Admin sign in</h2>
     <label for="lu">Username<input id="lu" name="username" autocomplete="username" autocapitalize="characters" spellcheck="false" required></label>
     <label for="lp">Password<input id="lp" name="password" type="password" autocomplete="current-password" autocapitalize="none" spellcheck="false" required></label>
+    <p class="lhint" id="lhint" hidden>Test login<br>Username: <b>ICB</b> · Password: <b>Laha Torin</b></p>
     <p class="lerr" id="lerr" aria-live="polite"></p>
     <button class="spin" type="submit">Sign in</button>
     <button class="btn" id="lx" type="button">Cancel</button>
@@ -1781,6 +1784,9 @@ const TOUR=[
   {sel:'nav a[data-v=fixtures]',h:'আপনার দলের ম্যাচ',p:'দুই গ্রুপ আর নকআউটের পুরো ছক। দলের লোগোতে চাপলে সময়, মাঠ আর প্রতিপক্ষ, সাথে পোস্টার।'},
   {sel:'nav a[data-v=live]',h:'লাইভ আর টেবিল',p:'খেলার দিন স্কোর, পরের ম্যাচ আর পয়েন্ট টেবিল এক জায়গায়।'},
   {sel:'#adminlink',h:'আয়োজকদের জন্য',p:'আয়োজক দলের সদস্যরা এখানে লগ ইন করবেন। ইউজারনেম ও পাসওয়ার্ড দেওয়া আছে BlastBhai স্লাইড ডেকে।'}];
+// Test login is shown only while the admin password is still the first one (server says so via /api/hint)
+fetch('/api/hint',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{if(!d||!d.show)return;$('#lhint').hidden=false;
+  TOUR[TOUR.length-1].p='আয়োজক দলের সদস্যরা এখানে লগ ইন করবেন। পরীক্ষার জন্য ইউজারনেম: ICB, পাসওয়ার্ড: Laha Torin'}).catch(()=>{});
 let ti=0;
 function placeTour(){const st=TOUR[ti],el=document.querySelector(st.sel),sp=$('#tspot'),cd=$('#tcard');
   $('#tstep').textContent=bn(ti+1)+' / '+bn(TOUR.length);$('#ttitle').textContent=st.h;$('#tbody').textContent=st.p;$('#tnext').textContent=ti===TOUR.length-1?'শুরু করি':'পরের';

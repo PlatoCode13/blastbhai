@@ -18,11 +18,14 @@ functions/            ← backend (Cloudflare Pages Functions), served under /ap
   api/me.js           ← "am I still signed in?"
   api/admin-password.js ← owner only: change the general admin password
   api/plan.js         ← shared match-day plan (breaks, times, format): everyone reads, admins save
+  api/hint.js         ← tells the app whether to show the test login (only while the admin password is unchanged)
 lib/auth.js           ← password hashing + signed sign-in tokens
 tools/make-hash.mjs   ← makes a password hash for the Cloudflare secrets
 tests/test_deploy.py  ← 30 deploy checks (pages, images, headers, API, phone)
 tests/test_auth.py    ← 48 login checks (admin, owner, password change, lockout)
 tests/test_breaks.py  ← 28 checks: breaks in every match list, Live break banner, shared plan
+tests/test_hint.py    ← 10 checks: test login shown only until the owner changes the admin password
+tests/test_app.py     ← 56 checks: home, tour, blank-before-draw, live filling, draws, phone layout
 wrangler.toml         ← Cloudflare project settings
 ```
 
@@ -62,6 +65,7 @@ ADMIN_PASS=... OWNER_PASS=... python3 tests/test_auth.py   # + .dev.vars with OW
 - Only the owner can change the admin password (Admin → Setup). The new one is kept in KV (`blastbhai-data`) and old admin sign-ins end at once.
 - 10 wrong tries from one connection → blocked for 15 minutes.
 - To change the **owner** password: `node tools/make-hash.mjs "new password"` → paste the result into the `OWNER_HASH` secret → redeploy.
+- Test login (ICB / Laha Torin) is shown on the sign-in screen and in the tour until the owner changes the admin password; then it disappears by itself.
 - Without the server (local file / claude.ai preview) nobody can sign in.
 
 Local test secrets go in `.dev.vars` (never committed).
