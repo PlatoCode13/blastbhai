@@ -369,12 +369,17 @@ nav a[hidden]{display:none}
 @media(max-width:980px){.days{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:560px){#v-draw{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:640px){.stats,.fmts,.fin .groups{grid-template-columns:minmax(0,1fr)}.slots{grid-template-columns:minmax(0,1fr)}.m .nm{display:none}.m{justify-content:center}.m.ko{align-items:center;text-align:center}.cols{height:200px}.top img{width:42px;height:42px}nav{margin-left:0}}
+.fbk{position:fixed;right:16px;bottom:16px;z-index:40;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--orange);color:#0b0f14;font:700 15px Barlow,sans-serif;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.fbk:hover{filter:brightness(1.08)}.fbk:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.fbk[hidden]{display:none}
+body{padding-bottom:72px}
+@media print{.fbk{display:none}}
 </style>
 </head>
 <body>
 <header class="top">
   <img src="brand/icb-mark.jpg" alt="Indoor Cricket Blast 2026 logo">
-  <div class="brand"><h1><b>Blast</b><em>Bhai</em></h1><span>Indoor Cricket Blast 2026 · Jhamela nai, shudhu khela</span></div>
+  <div class="brand"><h1><b>Blast</b><em>Bhai</em></h1><span>Indoor Cricket Blast 2026 · Apni khelun, baki BlastBhai dekhbe</span></div>
   <nav aria-label="Views">
     <a href="#live" data-v="live">Live</a>
     <a href="#draw" data-v="draw">Draw</a>
@@ -565,6 +570,7 @@ nav a[hidden]{display:none}
   <div class="row"><button class="btn" id="finclose" type="button">Close</button><button class="btn" id="finsched" type="button">See the schedule</button><button class="btn" id="finpub" type="button">See the public view</button></div>
 </div>
 
+<a class="fbk" id="fbk" href="https://tally.so/r/jePDvJ?source=app" target="_blank" rel="noopener" aria-label="Give feedback on BlastBhai (opens a short form)"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6a1.5 1.5 0 0 1-1.5 1.5H7l-3 3v-3h-.5A1.5 1.5 0 0 1 2 9.5z" fill="currentColor"/></svg>Feedback</a>
 <script>
 {
 const T=[
@@ -1026,7 +1032,7 @@ async function drawPoster(id){
   const fy=H-74,lg=x.createLinearGradient(60,0,W-60,0);lg.addColorStop(0,'#17a74b');lg.addColorStop(.5,'#41e06f');lg.addColorStop(.5,'#ff7a1a');lg.addColorStop(1,'#e8410f');x.fillStyle=lg;x.fillRect(60,fy-34,W-120,4);
   x.fillStyle='#c9d0d8';x.font='600 23px Barlow, sans-serif';x.fillText('Bhai, fixtures can change like Dhaka traffic. Latest always on BlastBhai.',60,fy+4);
   x.fillStyle='#6f7a87';x.font='500 20px Barlow, sans-serif';x.textAlign='right';x.fillText('Made '+stamp(),W-60,fy+38);x.textAlign='left';
-  x.fillStyle='#6f7a87';x.fillText('BlastBhai · Jhamela nai, shudhu khela',60,fy+38);
+  x.fillStyle='#6f7a87';x.fillText('BlastBhai · Apni khelun, baki BlastBhai dekhbe',60,fy+38);
   return cv;
 }
 async function drawMoM(k){
@@ -1061,7 +1067,7 @@ async function drawMoM(k){
   c.textAlign='center';c.fillStyle='#41e06f';c.font='800 italic 40px "Barlow Condensed", sans-serif';c.fillText(verdict.toUpperCase(),W/2,PY+280);c.textAlign='left';
   const fy=H-74,lg=c.createLinearGradient(60,0,W-60,0);lg.addColorStop(0,'#17a74b');lg.addColorStop(.5,'#41e06f');lg.addColorStop(.5,'#ff7a1a');lg.addColorStop(1,'#e8410f');c.fillStyle=lg;c.fillRect(60,fy-34,W-120,4);
   c.fillStyle='#c9d0d8';c.font='600 23px Barlow, sans-serif';c.fillText('Bhai, ekdom jhakkas! Full scorecard on CricHeroes.',60,fy+4);
-  c.fillStyle='#6f7a87';c.font='500 20px Barlow, sans-serif';c.textAlign='right';c.fillText('Made '+stamp(),W-60,fy+38);c.textAlign='left';c.fillText('BlastBhai · Jhamela nai, shudhu khela',60,fy+38);
+  c.fillStyle='#6f7a87';c.font='500 20px Barlow, sans-serif';c.textAlign='right';c.fillText('Made '+stamp(),W-60,fy+38);c.textAlign='left';c.fillText('BlastBhai · Apni khelun, baki BlastBhai dekhbe',60,fy+38);
   return cv;
 }
 function momCaption(k){const r=S.res[k]||{},a=document.querySelector(`#reslist [data-k="${CSS.escape(k)}"]`);const A=a&&a.dataset.a,B=a&&a.dataset.b;const s=r.s||{},tm=r.momt&&by[r.momt]?by[r.momt].n:'';
@@ -1353,6 +1359,7 @@ $('#lvfs').addEventListener('click',()=>{const el=$('#v-live');try{const p=docum
 $('#rulesfs').addEventListener('click',()=>{const el=$('#rulesframe');try{const p=el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}});
 
 /* ---------- routing ---------- */
+const FBURL='https://tally.so/r/jePDvJ';
 const PUBV=['live','draw','fixtures','table','rules'],ADMINV=['results','schedule','officials','planner','setup'];
 const SEC={live:'v-live',draw:'v-draw',fixtures:'v-teams',table:'v-table',rules:'v-rules',results:'v-results',schedule:'v-schedule',officials:'v-officials',planner:'v-odds',setup:'v-admin'};
 function route(){
@@ -1369,6 +1376,7 @@ function route(){
   pv.hidden=!pst||v==='draw'||v==='rules';pv.className='preview'+(pst==='test'?' test':'');
   pv.textContent=pst==='ex'?'Example only: the groups are drawn on Fri 4 Dec. Teams, groups and times below will change.':pst==='test'?'TEST DRAW: these groups are a test by the organisers, not official. The official draw is on Fri 4 Dec.':'';
   $('#v-draw').classList.toggle('pub',!isAdmin);
+  $('#fbk').href=FBURL+'?source=app&screen='+encodeURIComponent((viewPub?'public-':isAdmin?'admin-':'')+v);
   if(v!=='draw')$('#intro').hidden=true;
   if(v==='draw')renderDrawView();else if(v==='live')renderLive();else if(v==='table')renderTable();else if(v==='rules'){const f=$('#rulesframe');if(!f.src)f.src='rules/index.html'}
   else if(v==='fixtures')renderTeams();else if(v==='results')renderResults();else if(v==='officials')renderOfficials();else if(v==='planner')renderPlanner();else if(v==='setup')renderAdmin();else renderSched();
