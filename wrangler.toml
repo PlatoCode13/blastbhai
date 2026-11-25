@@ -3,7 +3,10 @@ name = "blastbhai"
 pages_build_output_dir = "site"
 compatibility_date = "2026-11-01"
 
-# Later: shared live data
-# [[kv_namespaces]]
-# binding = "ICB_KV"
-# id = "<from Cloudflare dashboard>"
+# Storage: admin password, sign-in guard; later shared live data
+[[kv_namespaces]]
+binding = "ICB_KV"
+id = "50fe92cc14e241bda3994ecccb3deb44"   # blastbhai-data
+
+# Secrets are set in the Cloudflare dashboard, never here:
+#   OWNER_HASH, ADMIN_HASH   (make them with: node tools/make-hash.mjs "password")

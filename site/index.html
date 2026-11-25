@@ -329,6 +329,12 @@ nav a[hidden]{display:none}
 /* login */
 .login{position:fixed;inset:0;z-index:60;background:rgba(3,5,7,.86);display:flex;align-items:center;justify-content:center;padding:16px}
 .login[hidden]{display:none}
+.wbox{width:min(100%,380px);background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--gold);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px;text-align:center;align-items:center;box-shadow:0 0 60px rgba(255,194,61,.18)}
+.wbox img{width:64px;height:64px;border-radius:14px;object-fit:cover}.wbox h2{font-size:32px}.wbox h2 span{color:var(--gold)}.wbox .spin,.wbox .btn{width:100%}
+#lu{text-transform:uppercase}
+#ownpw[hidden]{display:none}
+#ownpw input{font:500 16px Barlow,sans-serif;min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:0 12px}
+.otag{font:700 12px Barlow,sans-serif;color:#111;background:var(--gold);border-radius:8px;padding:2px 8px;vertical-align:middle;margin-left:6px}
 .login form{width:min(100%,380px);background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px}
 .login img{width:64px;height:64px;border-radius:14px;object-fit:cover}
 .login h2{font-size:32px}
@@ -665,6 +671,14 @@ h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-trans
 
   <section id="v-admin" hidden>
     <div class="adm">
+      <form class="acard wide" id="ownpw" hidden autocomplete="off"><h3>Admin password <span class="otag">Owner only</span></h3>
+        <p class="fine">Changes the password of the general admin account (username <b>ICB</b>) for everyone. Small letters only, at least 6 characters.</p>
+        <div class="opts">
+          <label for="np1">New password <input id="np1" type="password" autocomplete="new-password" autocapitalize="none" spellcheck="false" minlength="6" required></label>
+          <label for="np2">Repeat it <input id="np2" type="password" autocomplete="new-password" autocapitalize="none" spellcheck="false" minlength="6" required></label>
+        </div>
+        <button class="btn" id="npsave" type="submit">Save new password</button>
+        <p class="fine" id="npmsg" aria-live="polite"></p></form>
       <div class="acard"><h3>Group matches per team</h3>
         <div class="seg" id="mpt" role="group" aria-label="Matches per team"><button type="button" data-n="4">4 matches</button><button type="button" data-n="5">5 matches</button></div>
         <p class="fine" id="mptinfo"></p><div id="skips"></div>
@@ -717,12 +731,22 @@ h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-trans
   <form id="lf" autocomplete="on">
     <img src="brand/icb-mark.jpg" alt="">
     <h2>Admin sign in</h2>
-    <label for="lu">Username<input id="lu" name="username" autocomplete="username" required></label>
-    <label for="lp">Password<input id="lp" name="password" type="password" autocomplete="current-password" required></label>
+    <label for="lu">Username<input id="lu" name="username" autocomplete="username" autocapitalize="characters" spellcheck="false" required></label>
+    <label for="lp">Password<input id="lp" name="password" type="password" autocomplete="current-password" autocapitalize="none" spellcheck="false" required></label>
     <p class="lerr" id="lerr" aria-live="polite"></p>
     <button class="spin" type="submit">Sign in</button>
     <button class="btn" id="lx" type="button">Cancel</button>
   </form>
+</div>
+
+<div class="login" id="welcome" hidden>
+  <div class="wbox" role="dialog" aria-modal="true" aria-labelledby="wtitle">
+    <img src="brand/icb-mark.jpg" alt="">
+    <h2 id="wtitle">Welcome, <span id="wname">Zhimon</span></h2>
+    <p class="fine">Signed in as owner · ICB 2026. Only you can change the admin password.</p>
+    <button class="spin" id="wpw" type="button">Change admin password</button>
+    <button class="btn" id="wok" type="button">Continue</button>
+  </div>
 </div>
 
 <div class="tour" id="tour" hidden>
@@ -1618,22 +1642,65 @@ $('#plrun').addEventListener('click',runPlanner);
 /* ---------- schedule views ---------- */
 $('#sview').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;S.sview=b.dataset.s;save();renderSched()});
 
-/* ---------- login ---------- */
-const AH='e178fe231b23ecb3c0c9d86a42cb13bc06f86cc15dbf930d26131b510910b88d' // username ICB2026 (not case-sensitive);
-let isAdmin=false,viewPub=false;try{isAdmin=sessionStorage.getItem('bbAdmin')==='1'}catch(e){}
-const signedIn=()=>{try{return sessionStorage.getItem('bbAdmin')==='1'}catch(e){return false}};
+/* ---------- login ----------
+   Live site (Cloudflare): /api/login checks the password on the server.
+   Usernames count in CAPITALS, passwords in small letters.
+   No server (local file / preview): sign-in is not possible. */
+const API='/api';
+let isAdmin=false,viewPub=false,auth=null;
+try{auth=JSON.parse(sessionStorage.getItem('bbAuth')||'null')}catch(e){}
+try{sessionStorage.removeItem('bbAdmin')}catch(e){}
+isAdmin=!!auth;
+const signedIn=()=>!!auth;
+const isOwner=()=>!!(auth&&auth.role==='owner');
+function saveAuth(a){auth=a;try{a?sessionStorage.setItem('bbAuth',JSON.stringify(a)):sessionStorage.removeItem('bbAuth')}catch(e){}}
 function setPublicView(on){viewPub=on;isAdmin=on?false:signedIn();$('#fin').hidden=true;$('#intro').hidden=true;if(on)location.hash='live';route()}
 let afterLogin='results';
 async function sha(x){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(x));return [...new Uint8Array(b)].map(v=>v.toString(16).padStart(2,'0')).join('')}
+const normU=v=>String(v||'').trim().toUpperCase(),normP=v=>String(v||'').trim().toLowerCase();
+function keepCase(el,f){el.addEventListener('input',()=>{const a=el.selectionStart,b=el.selectionEnd,v=f(el.value);if(v!==el.value){el.value=v;try{el.setSelectionRange(a,b)}catch(e){}}})}
+keepCase($('#lu'),v=>v.toUpperCase());keepCase($('#lp'),v=>v.toLowerCase());
+['#np1','#np2'].forEach(q=>keepCase($(q),v=>v.toLowerCase()));
+async function api(path,body){
+  const h={'Content-Type':'application/json'};if(auth&&auth.token)h.Authorization='Bearer '+auth.token;
+  const r=await fetch(API+path,{method:body?'POST':'GET',headers:h,body:body?JSON.stringify(body):undefined,cache:'no-store'});
+  let d=null;if((r.headers.get('content-type')||'').includes('json')){try{d=await r.json()}catch(e){}}
+  return {status:r.status,data:d};
+}
 function openLogin(next){afterLogin=next||'results';$('#login').hidden=false;$('#lerr').textContent='';setTimeout(()=>$('#lu').focus(),50)}
-$('#lf').addEventListener('submit',async e=>{e.preventDefault();let ok=false;try{ok=(await sha($('#lu').value.trim().toLowerCase()+':'+$('#lp').value))===AH}catch(err){}
-  if(!ok){$('#lerr').textContent='Wrong username or password.';return}
-  isAdmin=true;try{sessionStorage.setItem('bbAdmin','1')}catch(err){}$('#login').hidden=true;$('#lp').value='';location.hash=afterLogin;route()});
+function signedInNow(a){saveAuth(a);isAdmin=true;$('#login').hidden=true;$('#lp').value='';location.hash=afterLogin;route();if(a.role==='owner')showWelcome()}
+function showWelcome(){$('#wname').textContent=(auth&&auth.name)||'Zhimon';$('#welcome').hidden=false;setTimeout(()=>$('#wok').focus(),50)}
+$('#wok').addEventListener('click',()=>{$('#welcome').hidden=true});
+$('#wpw').addEventListener('click',()=>{$('#welcome').hidden=true;location.hash='setup';route();setTimeout(()=>{const f=$('#ownpw');f.scrollIntoView({block:'center'});$('#np1').focus()},80)});
+$('#lf').addEventListener('submit',async e=>{e.preventDefault();
+  const u=normU($('#lu').value),p=normP($('#lp').value),btn=$('#lf .spin');$('#lerr').textContent='';btn.disabled=true;
+  try{
+    let res=null;try{res=await api('/login',{username:u,password:p})}catch(err){}
+    if(res&&res.data&&res.data.ok){signedInNow({token:res.data.token,role:res.data.role,name:res.data.name});return}
+    if(res&&res.status===401){$('#lerr').textContent='Wrong username or password.';return}
+    if(res&&res.status===429){$('#lerr').textContent='Too many tries. Please wait 15 minutes.';return}
+    if(res&&res.data&&res.data.error){$('#lerr').textContent='Sign-in is not set up on the server yet.';return}
+    $('#lerr').textContent='Sign-in works on the live site only (blastbhai.pages.dev).';
+  }finally{btn.disabled=false}
+});
 $('#lx').addEventListener('click',()=>{$('#login').hidden=true;if(ADMINV.includes(location.hash.slice(1)))location.hash='live'});
+$('#ownpw').addEventListener('submit',async e=>{e.preventDefault();const m=$('#npmsg'),a=normP($('#np1').value),b=normP($('#np2').value);
+  if(!isOwner()){m.textContent='Only the owner can do this.';return}
+  if(a.length<6){m.textContent='At least 6 characters.';return}
+  if(a!==b){m.textContent='The two passwords are not the same.';return}
+  $('#npsave').disabled=true;m.textContent='Saving…';
+  try{const r=await api('/admin-password',{newPassword:a});
+    if(r.data&&r.data.ok){m.textContent='Saved. The new admin password works for everyone from now on; old admin sign-ins are logged out.';$('#np1').value='';$('#np2').value=''}
+    else if(r.status===401){m.textContent='You were signed out. Please sign in again.';saveAuth(null);isAdmin=false;openLogin('setup')}
+    else m.textContent=r.status===503?'Password storage is not set up on the server yet.':'Could not save. Try again.';
+  }catch(err){m.textContent='No connection to the server.'}finally{$('#npsave').disabled=false}
+});
+// re-check a saved sign-in with the server (it ends when the admin password changes)
+if(auth&&auth.token)api('/me').then(r=>{if(r.status===401){saveAuth(null);isAdmin=false;route()}else if(r.data&&r.data.ok&&r.data.role!==auth.role){saveAuth({...auth,role:r.data.role,name:r.data.name});route()}}).catch(()=>{});
 $('#asPublic').addEventListener('click',()=>setPublicView(true));
 $('#backAdmin').addEventListener('click',()=>{setPublicView(false);location.hash='draw'});
 $('#finpub').addEventListener('click',()=>setPublicView(true));
-$('#logout').addEventListener('click',()=>{isAdmin=false;try{sessionStorage.removeItem('bbAdmin')}catch(e){}location.hash='live';route()});
+$('#logout').addEventListener('click',()=>{isAdmin=false;saveAuth(null);location.hash='live';route()});
 $('#lvfs').addEventListener('click',()=>{const el=$('#v-live');try{const p=document.fullscreenElement?document.exitFullscreen():el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}});
 $('#rulesfs').addEventListener('click',()=>{const el=$('#rulesframe');try{const p=el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}});
 
@@ -1695,7 +1762,7 @@ function route(){
   if(ADMINV.includes(v)&&!isAdmin){if(viewPub&&signedIn()){setPublicView(false);return}openLogin(v);v='home'}
   $('#pubbar').hidden=!viewPub;
   for(const [k,id] of Object.entries(SEC))$('#'+id).hidden=k!==v;
-  $('#subnav').hidden=!isAdmin;$('#adminlink').hidden=isAdmin;
+  $('#subnav').hidden=!isAdmin;$('#adminlink').hidden=isAdmin;$('#subnav .who').textContent=isOwner()?'Owner · '+auth.name:'Admin';$('#ownpw').hidden=!isOwner();
   $$('nav a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   $$('#subnav a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   const pst=!S.drawDone?'ex':S.drawKind==='official'?'':S.drawKind==='practice'?'practice':'test',pv=$('#preview');
