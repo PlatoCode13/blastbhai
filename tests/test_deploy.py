@@ -51,6 +51,11 @@ check("nothing private inside site/ (no tests, configs, .py)",
 check("API code is outside site/ (not served as a file)",
       (ROOT / "functions/api/health.js").is_file() and not (SITE / "functions").exists())
 
+# --- 1b. Draw fairness: the wheel and the shuffle use crypto randomness
+html = (SITE / "index.html").read_text()
+check("draw uses crypto.getRandomValues", "crypto.getRandomValues" in html and "w=Math.floor(rnd()*n)" in html
+      and "Math.floor(rnd()*(i+1))" in html)
+
 # --- 2. HTTP: pages, assets, headers --------------------------------------
 s, h, body = get("/")
 check("GET / -> 200", s == 200, s)
@@ -67,6 +72,10 @@ check("all 12 logos served as images", s == 200 and "image/jpeg" in ctype(h), f"
 s, h, _ = get("/logos/BB.jpg")
 cc = {k.lower(): v for k, v in h.items()}.get("cache-control", "")
 check("logos cached for a day", "max-age=86400" in cc, cc)
+s, h, _ = get("/")
+hl = {k.lower(): v for k, v in h.items()}
+check("page can't be framed by other sites", hl.get("x-frame-options") == "SAMEORIGIN"
+      and "frame-ancestors 'self'" in hl.get("content-security-policy", ""), hl.get("content-security-policy"))
 check("brand images served as images",
       all("image/jpeg" in ctype(get(f"/brand/{n}.jpg")[1]) for n in ["icb-full", "icb-mark"]))
 s, h, body = get("/rules/")

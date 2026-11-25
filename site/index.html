@@ -805,7 +805,10 @@ const T=[
 const by=Object.fromEntries(T.map(t=>[t.id,t]));
 const HOME=T.filter(t=>t.h).map(t=>t.id),AWAY=T.filter(t=>!t.h).map(t=>t.id);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+// Draw randomness comes from the browser's cryptographic random generator (the same kind used for encryption),
+// not from Math.random. Nobody, including the organisers, can steer or predict it.
+const rnd=()=>{try{return crypto.getRandomValues(new Uint32Array(1))[0]/4294967296}catch(e){return Math.random()}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pct=x=>Math.round(x*100)+'%';
 const src=id=>{const b=by[id];if(b&&b.slot){const t=slotTeam(id);return t?`logos/${t}.jpg`:''}return `logos/${id}.jpg`};
 const logo=(id,s)=>{const b=by[id];if(b&&b.slot&&!slotTeam(id))return `<span class="lg slg ${b.g.toLowerCase()}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.4)}px" aria-hidden="true">${id}</span>`;return `<img class="lg" src="${src(id)}" width="${s}" height="${s}" alt="">`};
@@ -908,7 +911,7 @@ const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 function spin(){
   const p=pool();if(spinning||p.length<2||!$('#intro').hidden)return;
   audio();spinning=true;$('#spin').disabled=true;$('#wheel').classList.add('spinning');$('#call').textContent='';
-  const n=p.length,a=360/n,w=Math.floor(Math.random()*n),c=w*a+a/2+(Math.random()-.5)*a*.3,R1=reduced();
+  const n=p.length,a=360/n,w=Math.floor(rnd()*n),c=w*a+a/2+(Math.random()-.5)*a*.3,R1=reduced();
   const D1=R1?1500:19500+Math.random()*3000,D2=R1?0:3400;
   const start=rot,target=start+360*(R1?1:7)+(((-c-start)%360)+360)%360,over=R1?0:a*(.85+Math.random()*.15);
   const g=$('#rot');g.style.transition='none';

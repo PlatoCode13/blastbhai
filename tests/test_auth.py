@@ -201,6 +201,7 @@ if LOCKOUT:
     codes = [login("ICB", f"guess {i}")[0] for i in range(11)]
     check("10 wrong tries -> blocked (429)", codes[-1] == 429, codes)
     check("blocked even with the right password", login("ICB", AP)[0] == 429)
+    check("guessing ICB does not lock the owner out (same connection)", login("ZHIMON", OP)[0] == 200)
 
 print(f"\n{sum(results)}/{len(results)} checks passed")
 sys.exit(0 if all(results) else 1)
