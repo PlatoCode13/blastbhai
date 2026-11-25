@@ -6,7 +6,7 @@
 <title>BlastBhai ICB 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Barlow:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* VOICE draw night under floodlights: loud on the big screen, calm in the planning tabs
    IDEA the ICB 2026 arena logo come to life: a lit wheel on a reflective floor
@@ -18,7 +18,7 @@
 --green:#41e06f;--green2:#17a74b;--orange:#ff7a1a;--red:#ff3b2f;--gold:#ffc23d;--ok:#41e06f;--warn:#ffb23d;--bad:#ff5a4f}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0;min-height:100%}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif;overflow-x:clip;
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,"Hind Siliguri",system-ui,sans-serif;overflow-x:clip;
 background-image:radial-gradient(60% 40% at 6% -6%,rgba(255,170,70,.20),transparent 70%),radial-gradient(60% 40% at 94% -6%,rgba(255,170,70,.20),transparent 70%),radial-gradient(80% 30% at 50% 108%,rgba(65,224,111,.12),transparent 70%);background-attachment:fixed}
 h1,h2,h3{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:1;margin:0}
 .top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px max(3vw,16px);border-bottom:1px solid var(--line);background:rgba(7,9,12,.7)}
@@ -337,17 +337,18 @@ nav a[hidden]{display:none}
 .lerr{margin:0;color:var(--bad);font-weight:600;min-height:1.2em;font-size:14px}
 .login .spin{min-height:52px;font-size:20px}
 /* public draw */
-#v-draw.pub #mode,#v-draw.pub #spin,#v-draw.pub .tools,#v-draw.pub .keys{display:none}
+#v-draw.pub #mode,#v-draw.pub #official{display:none}
 .pubnote{color:var(--mut);font:600 16px/1.4 Barlow,sans-serif;text-transform:none;display:block;text-align:center}
 @media(max-width:900px){.fields,.lvgrid,.tables,.plgrid,.roster{grid-template-columns:minmax(0,1fr)}.offsum{grid-template-columns:repeat(3,minmax(0,1fr))}.avail{grid-template-columns:repeat(2,minmax(0,1fr))}.oitem{grid-template-columns:4.5em minmax(0,1fr)}.oitem .who2{grid-column:2}}
 @media(max-width:640px){.bracket{grid-template-columns:minmax(0,1fr)}.avail{grid-template-columns:minmax(0,1fr)}.ritem{grid-template-columns:4.6em minmax(0,1fr)}.ritem .wbtns{grid-column:1/-1}}
 /* team fixtures */
 .pk.all .allic{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--green2),var(--orange));color:#07090c;font:800 italic 20px "Barlow Condensed",sans-serif}
 #allfx[hidden],#tview[hidden]{display:none}
-.picker{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:8px;margin-bottom:24px}
+.picker{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:8px;margin-bottom:24px}
 .pk{border:1.5px solid var(--line);background:var(--panel);border-radius:14px;padding:8px 4px;cursor:pointer;color:var(--ink);font:700 italic 13px/1.1 "Barlow Condensed",sans-serif;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:44px}
 .pk[aria-pressed=true]{border-color:var(--gc,var(--green));box-shadow:0 0 18px color-mix(in srgb,var(--gc,var(--green)) 35%,transparent)}
 .pk img{width:46px;height:46px}
+.pk>span:last-child{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tview{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
 .pwrap img{width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:var(--panel)}
 #tname{font-size:clamp(34px,4.4vw,52px)}
@@ -363,7 +364,7 @@ nav a[hidden]{display:none}
 .fx li.ko{background:rgba(255,122,26,.1)}
 .dl{min-height:54px;font-size:21px;padding:0 34px}
 @media(max-width:980px){.picker{grid-template-columns:repeat(7,minmax(0,1fr))}.tview{grid-template-columns:minmax(0,1fr)}.pwrap{max-width:440px}}
-@media(max-width:640px){.picker{grid-template-columns:repeat(4,minmax(0,1fr))}.fx li{grid-template-columns:6.5em minmax(0,1fr)}.fx .fd{display:none}}
+@media(max-width:640px){.picker{display:flex;overflow-x:auto;scroll-snap-type:x proximity;margin:0 -16px 20px;padding:4px 16px 8px;scrollbar-width:none}.picker::-webkit-scrollbar{display:none}.picker .pk{flex:0 0 78px;scroll-snap-align:start}.fx li{grid-template-columns:6.5em minmax(0,1fr)}.fx .fd{display:none}}
 @media(prefers-reduced-motion:reduce){.slot.new,.ann.in,.ann.in .annb,.intro .spin{animation:none}.spinning .bulb{animation:none}}
 @media(max-width:1100px){#v-draw{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}#v-draw .stagebox{grid-column:1/-1;order:-1}}
 @media(max-width:980px){.days{grid-template-columns:minmax(0,1fr)}}
@@ -372,8 +373,151 @@ nav a[hidden]{display:none}
 .fbk{position:fixed;right:16px;bottom:16px;z-index:40;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--orange);color:#0b0f14;font:700 15px Barlow,sans-serif;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 .fbk:hover{filter:brightness(1.08)}.fbk:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .fbk[hidden]{display:none}
+.fbk{transition:transform .28s ease,opacity .28s ease}
+.fbk.away{transform:translateY(calc(100% + 24px));opacity:0;pointer-events:none}
+@media(max-width:640px){.fbk{width:48px;height:48px;min-height:48px;padding:0;justify-content:center;right:12px;bottom:calc(12px + env(safe-area-inset-bottom))}.fbk .fbt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.fbk svg{width:20px;height:20px}main{padding-bottom:84px}}
+@media(prefers-reduced-motion:reduce){.fbk{transition:none}}
 body{padding-bottom:72px}
 @media print{.fbk{display:none}}
+
+/* ===== glass look ===== */
+.top{position:sticky;top:0;z-index:35;background:rgba(7,9,12,.62);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border-bottom:1px solid rgba(255,255,255,.07)}
+.subnav{background:rgba(17,22,29,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.glass,.grp,.stat,.fcard,.acard,.tbl,.ritem,.oitem,.bm,.fm,.rs2,.av,.os{background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2)}
+.glass{border-radius:22px}
+.bn{font-family:"Hind Siliguri",Barlow,sans-serif}
+/* home */
+.hero{position:relative;border-radius:28px;overflow:hidden;min-height:min(68vh,560px);display:flex;align-items:center;justify-content:center;padding:clamp(20px,4vw,48px) 16px;background:#000 url(brand/icb-full.jpg) center 40%/cover no-repeat;margin-bottom:28px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 70% at 50% 45%,rgba(5,7,10,.35),rgba(5,7,10,.88))}
+.heroin{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;width:min(100%,860px);padding:clamp(18px,3vw,32px);border-radius:26px;background:rgba(10,13,18,.38);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3)}
+.kick{margin:0;font:700 14px Barlow,"Hind Siliguri",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#ffd08a}
+.hh{font:700 clamp(22px,3vw,32px)/1.2 "Hind Siliguri",sans-serif;text-transform:none;font-style:normal;margin:0}
+.bigcd{display:flex;gap:clamp(8px,1.6vw,18px);justify-content:center;flex-wrap:wrap}
+.bigcd>div{min-width:clamp(70px,14vw,150px);padding:clamp(10px,1.4vw,16px) 8px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
+.bigcd b{display:block;font:800 italic clamp(48px,9vw,112px)/.95 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;color:#fff;text-shadow:0 0 30px rgba(255,160,60,.35)}
+.bigcd small{display:block;margin-top:6px;font:600 clamp(13px,1.4vw,16px) "Hind Siliguri",sans-serif;color:#c9d0d8}
+.bigcd>.s b{color:var(--orange)}
+.bigcd .go b{font-size:clamp(40px,6vw,72px);color:var(--green)}
+.when{margin:0;font-size:clamp(16px,1.8vw,20px);font-weight:600;color:#e6eaef}
+.cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.cta .spin{display:inline-flex;align-items:center;text-decoration:none;font:700 20px "Hind Siliguri",sans-serif;text-transform:none;letter-spacing:0;min-height:56px;padding:0 30px}
+.glassbtn{display:inline-flex;align-items:center;text-decoration:none;min-height:56px;padding:0 24px;border-radius:28px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;font:600 18px "Hind Siliguri",sans-serif;backdrop-filter:blur(10px)}
+.facts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.fact{padding:16px 10px;text-align:center}
+.fact b{display:block;font:700 clamp(34px,4vw,48px)/1 "Hind Siliguri",sans-serif;color:#fff}
+.fact span{display:block;margin-top:6px;font:600 16px "Hind Siliguri",sans-serif;color:#dfe4ea}
+.fact small{display:block;font:500 13px "Hind Siliguri",sans-serif;color:var(--mut)}
+.fact:nth-child(odd) b{color:var(--green)}.fact:nth-child(even) b{color:var(--orange)}
+.homegrid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px}
+.news,.fun{padding:20px}
+.ann1{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.08)}
+.ann1:first-child{border-top:0}
+.ann1 i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--orange);margin-top:9px;box-shadow:0 0 10px var(--orange)}
+.ann1 p{margin:0;flex:1;font:500 17px/1.55 "Hind Siliguri",sans-serif}
+.annadd{display:flex;gap:8px;margin-top:12px}
+.annadd[hidden]{display:none}
+.annadd input{flex:1;font:500 16px "Hind Siliguri",Barlow,sans-serif;min-height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--ink);padding:0 12px}
+.fun{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.funk{margin:0;color:var(--gold);font-weight:600}
+.funn{font:700 72px/1 "Hind Siliguri",sans-serif;color:#fff}
+.fun p{margin:0;color:#dfe4ea;font-size:16px;line-height:1.55}
+.fun .btn{margin-top:auto}
+.exm{font:600 12px "Hind Siliguri",sans-serif;color:var(--gold);border:1px solid rgba(255,194,61,.45);border-radius:99px;padding:2px 10px;margin-left:auto;margin-right:8px}
+.preview{font-family:"Hind Siliguri",Barlow,sans-serif}
+.preview.practice{background:rgba(65,224,111,.12);color:var(--green)}
+.pubnote{font-family:"Hind Siliguri",Barlow,sans-serif!important}
+h3.bn,.sh.bn{font-family:"Hind Siliguri",sans-serif;font-style:normal;text-transform:none;font-weight:700;letter-spacing:0}
+.bigcd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,680px)}
+.bigcd>div{min-width:0}
+@media(max-width:900px){.top{position:static}}
+@media(max-width:560px){.bigcd{gap:6px}.bigcd>div{border-radius:14px;padding:8px 4px}.bigcd b{font-size:clamp(34px,11vw,48px)}.heroin{padding:16px 10px}.cta .spin,.glassbtn{min-height:50px;font-size:17px;padding:0 20px}}
+@media(max-width:900px){.facts{grid-template-columns:repeat(3,minmax(0,1fr))}.homegrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:auto}}
+
+/* slot badge (before the draw) */
+.slg{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04)!important;border:1.5px dashed rgba(255,255,255,.28);box-shadow:none!important;font-family:"Barlow Condensed",sans-serif;font-weight:800;font-style:italic;color:var(--mut)}
+.slg.a{border-color:rgba(65,224,111,.55);color:var(--green)}.slg.b{border-color:rgba(255,122,26,.55);color:var(--orange)}
+.pk[disabled]{cursor:default;opacity:.8}
+.pk .mapic{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,194,61,.14);border:1.5px solid rgba(255,194,61,.5);color:var(--gold)}
+.pk span.bn{font:600 13px/1.1 "Hind Siliguri",sans-serif;text-transform:none}
+.predraw{margin-bottom:16px}
+/* tournament map */
+#fxmap[hidden]{display:none}
+.mhd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;margin-bottom:16px}
+.mhd h2{margin:0;font:700 26px/1.2 "Hind Siliguri",sans-serif}
+.mst{display:inline-flex;align-items:center;gap:8px;font:600 15px "Hind Siliguri",sans-serif;color:var(--gold)}
+.mst i{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.mst.run{color:var(--green)}.mst.run i{animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.mgrid{display:grid;grid-template-columns:minmax(170px,1fr) minmax(0,3.4fr) minmax(170px,1fr);gap:18px;align-items:center}
+.mgp{border-radius:18px;padding:12px;border-top:3px solid var(--gc)}
+.mgp h3{margin:0 0 8px;font:800 italic 20px "Barlow Condensed",sans-serif;text-transform:uppercase;color:var(--gc)}
+.mrow{display:flex;align-items:center;gap:8px;padding:6px 4px;border-radius:10px;min-height:44px}
+.mrow+.mrow{border-top:1px solid rgba(255,255,255,.06)}
+.mrow .sl{flex:none;width:30px;font:800 italic 16px "Barlow Condensed",sans-serif;color:var(--gc)}
+.mrow b{font:700 15px/1.15 Barlow,sans-serif;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mrow .ph{flex:1;height:30px;border-radius:9px;border:1.5px dashed rgba(255,255,255,.16)}
+.mrow.new{animation:mpop .9s ease}
+@keyframes mpop{0%{background:color-mix(in srgb,var(--gc) 45%,transparent);transform:scale(1.04)}100%{background:transparent;transform:none}}
+.mbr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(150px,1.15fr) minmax(0,1fr) minmax(0,1fr);gap:0;align-items:center}
+.qcol{display:grid;gap:18px;position:relative;padding-right:14px}
+.qcol.r{padding:0 0 0 14px}
+.qcol.two::after{content:"";position:absolute;right:0;top:25%;bottom:25%;border:2px solid rgba(255,255,255,.18);border-left:0;border-radius:0 10px 10px 0;width:12px}
+.qcol.r.two::after{right:auto;left:0;border:2px solid rgba(255,255,255,.18);border-right:0;border-radius:10px 0 0 10px}
+.scol{position:relative;padding:0 14px}
+.scol::before,.scol::after{content:"";position:absolute;top:50%;height:2px;width:14px;background:rgba(255,255,255,.18)}
+.scol::before{left:0}.scol::after{right:0}
+.scol.solo::before{display:none}.scol.r.solo::after{display:none}
+.scol.solo{padding-left:0}.scol.r.solo{padding-right:0;padding-left:14px}
+.bk{border-radius:14px;padding:8px 10px}
+.bk small{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 6px;font:700 12px Barlow,sans-serif;color:var(--mut);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.bk small em{font-family:"Hind Siliguri",sans-serif;font-style:normal;font-weight:600;letter-spacing:0;text-transform:none}
+.bs{display:flex;align-items:center;gap:7px;min-height:30px;font:700 14px/1.1 Barlow,sans-serif;min-width:0}
+.bs span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bs .pos{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:24px;padding:0 6px;border-radius:7px;font:800 italic 14px "Barlow Condensed",sans-serif;background:rgba(255,255,255,.06);color:var(--ink)}
+.bs .pos.a{color:var(--green);background:rgba(65,224,111,.12)}.bs .pos.b{color:var(--orange);background:rgba(255,122,26,.12)}
+.bs i{font-style:normal;font-weight:500;color:var(--mut);font-family:"Hind Siliguri",sans-serif;font-size:13px}
+.bs.w{color:var(--green)}
+.fcol{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.tro{position:relative;display:grid;place-items:center;width:min(100%,240px);margin:-18px 0 -4px}
+.tro::before{content:"";position:absolute;inset:-14% -24% 0;border-radius:50%;background:radial-gradient(ellipse at 50% 38%,rgba(255,206,92,.5),rgba(255,170,40,.14) 40%,transparent 68%);animation:tglow 4s ease-in-out infinite}
+.tro::after{content:"";position:absolute;left:10%;right:10%;top:4%;height:46%;border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.35),transparent 65%);filter:blur(8px)}
+@keyframes tglow{50%{opacity:.7;transform:scale(.95)}}
+@keyframes trays{to{transform:rotate(360deg)}}
+.trophy{position:relative;z-index:1;width:100%;height:auto;filter:drop-shadow(0 0 18px rgba(255,194,61,.45)) drop-shadow(0 18px 26px rgba(0,0,0,.6));animation:tfloat 5s ease-in-out infinite}
+.trophy .shine{animation:tshine 4.5s ease-in-out infinite}
+@keyframes tshine{0%,60%{transform:translateX(0)}100%{transform:translateX(110px)}}
+@keyframes tfloat{50%{transform:translateY(-7px)}}
+.trophy .tw{animation:twk 2.6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+.trophy .tw.d2{animation-delay:1.1s}.trophy .tw.d3{animation-delay:1.9s}
+@keyframes twk{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1)}}
+.bk.fnl{width:100%;border-color:rgba(255,194,61,.45);box-shadow:0 0 30px rgba(255,194,61,.12),inset 0 1px 0 rgba(255,255,255,.08)}
+.bk.fnl small{color:var(--gold);justify-content:center;gap:10px}
+.mfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;padding:14px 16px;border-radius:18px}
+.mcount{display:flex;flex-wrap:wrap;gap:6px 18px;font:500 15px "Hind Siliguri",sans-serif;color:var(--mut)}
+.mcount b{font:800 italic 22px "Barlow Condensed",sans-serif;color:var(--ink);margin-right:4px}
+.mcount .tot b{color:var(--gold)}
+.mnote{flex-basis:100%;margin:0;font:500 14px "Hind Siliguri",sans-serif;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){.trophy,.trophy .tw,.trophy .shine,.mrow.new,.tro::before,.tro::after{animation:none}}
+@media(max-width:1180px){.mgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.mgp.a{grid-column:1}.mgp.b{grid-column:2;grid-row:1}.mbr{grid-column:1/-1}}
+@media(max-width:760px){
+  .mbr{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+  .fcol{grid-column:1/-1;order:-2}.scol{order:-1;padding:0}.scol::before,.scol::after,.qcol::after{display:none}
+  .qcol,.qcol.r{padding:0;gap:12px}.tro{width:200px;margin:6px 0 0}
+  .mgrid{gap:12px}.mgp{padding:10px 8px}.mrow b{font-size:13px}.mrow .lg{width:28px;height:28px}
+}
+/* tour */
+.tour{position:fixed;inset:0;z-index:70}
+.tour[hidden]{display:none}
+.tspot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(3,5,8,.72);border:2px solid var(--gold);transition:all .35s ease;pointer-events:none}
+.tcard{position:fixed;padding:18px;border-radius:20px;background:rgba(16,20,27,.86);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 20px 60px rgba(0,0,0,.5);transition:top .35s ease,left .35s ease}
+.tstep{font:600 13px "Hind Siliguri",sans-serif;color:var(--gold)}
+.tcard h3{font:700 22px/1.3 "Hind Siliguri",sans-serif;text-transform:none;font-style:normal;margin:4px 0 6px}
+.tcard p{margin:0 0 14px;font:500 16px/1.6 "Hind Siliguri",sans-serif;color:#dfe4ea}
+.trow{display:flex;justify-content:space-between;gap:10px}
+.trow .btn{font-family:"Hind Siliguri",Barlow,sans-serif}
+.tnext{background:var(--orange);border-color:var(--orange);color:#0b0f14}
+@media(prefers-reduced-motion:reduce){.tspot,.tcard{transition:none}}
 </style>
 </head>
 <body>
@@ -381,6 +525,7 @@ body{padding-bottom:72px}
   <img src="brand/icb-mark.jpg" alt="Indoor Cricket Blast 2026 logo">
   <div class="brand"><h1><b>Blast</b><em>Bhai</em></h1><span>Indoor Cricket Blast 2026 · Apni khelun, baki BlastBhai dekhbe</span></div>
   <nav aria-label="Views">
+    <a href="#home" data-v="home">Home</a>
     <a href="#live" data-v="live">Live</a>
     <a href="#draw" data-v="draw">Draw</a>
     <a href="#fixtures" data-v="fixtures">Fixtures</a>
@@ -402,6 +547,25 @@ body{padding-bottom:72px}
 <div class="pubbar" id="pubbar" hidden><span>👁 You are seeing exactly what the public sees.</span><button class="btn sm" id="backAdmin" type="button">Back to admin</button></div>
 <div class="preview" id="preview" role="status" hidden></div>
 <main>
+  <section id="v-home" hidden>
+    <div class="hero">
+      <div class="heroin">
+        <p class="kick">Indoor Cricket Blast 2026 · হারবুর্গ, হামবুর্গ</p>
+        <h2 class="bn hh">প্রথম বল মাঠে গড়াতে আর বাকি</h2>
+        <div class="bigcd" id="homecd" role="timer" aria-live="off"></div>
+        <p class="when bn">শনিবার, ২৬ ডিসেম্বর · সকাল ৮টা</p>
+        <div class="cta"><a class="spin" href="#draw">ড্র ঘুরিয়ে দেখুন</a><a class="btn glassbtn" href="#fixtures">ম্যাচ সূচি</a></div>
+      </div>
+    </div>
+    <h3 class="sh bn">এক নজরে</h3>
+    <div class="facts" id="facts"></div>
+    <div class="homegrid">
+      <div class="glass news"><h3 class="sh bn">ঘোষণা</h3><div id="annlist"></div>
+        <form class="annadd" id="annadd" hidden><input id="anntext" maxlength="160" placeholder="নতুন ঘোষণা লিখুন" aria-label="New announcement"><button class="btn sm" type="submit">যোগ করুন</button></form></div>
+      <div class="glass fun"><p class="bn funk">রেজিস্ট্রেশনের দিন</p><b class="funn">৪৫</b><p class="bn">মিনিটে ৯টি দলের নাম জমা পড়েছিল। ১৪ সেকেন্ডের ব্যবধানে দুটি দলও ছিল।</p><button class="btn sm" id="retour" type="button">গাইডটি আবার দেখুন</button></div>
+    </div>
+  </section>
+
   <section id="v-live" hidden>
     <div class="lvhead">
       <div class="ring" id="ring"></div>
@@ -531,6 +695,7 @@ body{padding-bottom:72px}
   </section>
 <section id="v-teams" hidden>
   <div class="picker" id="picker" role="group" aria-label="Choose a team"></div>
+  <div id="fxmap"></div>
   <div id="allfx"></div>
   <div class="tview" id="tview">
     <div class="pwrap"><img id="poster" alt="Fixture poster"></div>
@@ -560,17 +725,27 @@ body{padding-bottom:72px}
   </form>
 </div>
 
+<div class="tour" id="tour" hidden>
+  <div class="tspot" id="tspot"></div>
+  <div class="tcard" id="tcard" role="dialog" aria-modal="true" aria-labelledby="ttitle">
+    <span class="tstep" id="tstep"></span>
+    <h3 id="ttitle" class="bn"></h3>
+    <p id="tbody" class="bn"></p>
+    <div class="trow"><button class="btn sm" id="tskip" type="button">এড়িয়ে যান</button><button class="btn sm tnext" id="tnext" type="button">পরের</button></div>
+  </div>
+</div>
+
 <div class="intro" id="intro" hidden>
-  <p>Group stage draw</p>
+  <p id="introp">Group stage draw</p>
   <button class="spin" id="go" type="button">Start the draw</button>
 </div>
 <div class="fin" id="fin" hidden>
   <h2>The groups are <em>set</em></h2>
   <div class="groups" id="fingroups"></div>
-  <div class="row"><button class="btn" id="finclose" type="button">Close</button><button class="btn" id="finsched" type="button">See the schedule</button><button class="btn" id="finpub" type="button">See the public view</button></div>
+  <div class="row"><button class="btn" id="finclose" type="button">Close</button><button class="btn" id="finsched" type="button">See the fixtures</button><button class="btn" id="finpub" type="button">See the public view</button></div>
 </div>
 
-<a class="fbk" id="fbk" href="https://tally.so/r/jePDvJ?source=app" target="_blank" rel="noopener" aria-label="Give feedback on BlastBhai (opens a short form)"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6a1.5 1.5 0 0 1-1.5 1.5H7l-3 3v-3h-.5A1.5 1.5 0 0 1 2 9.5z" fill="currentColor"/></svg>Feedback</a>
+<a class="fbk" id="fbk" href="https://tally.so/r/jePDvJ?source=app" target="_blank" rel="noopener" aria-label="Give feedback on BlastBhai (opens a short form)"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6a1.5 1.5 0 0 1-1.5 1.5H7l-3 3v-3h-.5A1.5 1.5 0 0 1 2 9.5z" fill="currentColor"/></svg><span class="fbt">Feedback</span></a>
 <script>
 {
 const T=[
@@ -592,18 +767,44 @@ const HOME=T.filter(t=>t.h).map(t=>t.id),AWAY=T.filter(t=>!t.h).map(t=>t.id);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pct=x=>Math.round(x*100)+'%';
-const src=id=>`logos/${id}.jpg`;
-const logo=(id,s)=>`<img class="lg" src="${src(id)}" width="${s}" height="${s}" alt="">`;
+const src=id=>{const b=by[id];if(b&&b.slot){const t=slotTeam(id);return t?`logos/${t}.jpg`:''}return `logos/${id}.jpg`};
+const logo=(id,s)=>{const b=by[id];if(b&&b.slot&&!slotTeam(id))return `<span class="lg slg ${b.g.toLowerCase()}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.4)}px" aria-hidden="true">${id}</span>`;return `<img class="lg" src="${src(id)}" width="${s}" height="${s}" alt="">`};
 const GC={A:'#41e06f',B:'#ff7a1a'};
 
 /* ---------- state ---------- */
 const DP0={d1:9,start:[480,480],close:[1140,1200],br:[[{l:'Lunch + Dhuhr prayer',a:4,m:60},{l:'Asr prayer',a:5,m:20},{l:'Maghrib prayer',a:7,m:20},{l:'Buffer',a:9,m:20}],[{l:'Table check + rest before QFs',a:3,m:20},{l:'Lunch + Dhuhr prayer',a:4,m:60},{l:'Asr prayer',a:5,m:20},{l:'Maghrib + final prep',a:6,m:40},{l:'Prize giving + closing',a:7,m:60},{l:'Buffer',a:7,m:60}]]};
 let S={mode:'random',mpt:4,res:{},avail:{},roster:{},sview:'field',plmode:'random',drawDone:false,order:[],final:null,fmt:'B',len:55,ch:5,alone:true,muted:false,dp:JSON.parse(JSON.stringify(DP0))};
-try{const s=JSON.parse(localStorage.getItem('icb26-v3')||'null');if(s&&Array.isArray(s.order)){if(!s.dp){s.alone=true;s.mpt=4}S=Object.assign(S,s)}}catch(e){}
-const save=()=>{try{localStorage.setItem('icb26-v3',JSON.stringify(S))}catch(e){}};
+// Settings live on this device. A draw lives only in this browser tab (sessionStorage), so every new visit
+// starts blank: no leftover test or practice groups that could make the real draw look scripted.
+// Only the official draw is kept on the device.
+const DK=['order','final','drawDone','drawKind','res','team'],OK='icb26-official',DSK='icb26-draw';
+const pick=(o,ks)=>Object.fromEntries(ks.filter(k=>k in o).map(k=>[k,o[k]]));
+{let L=null,D=null,O=null;
+ try{L=JSON.parse(localStorage.getItem('icb26-v3')||'null')}catch(e){}
+ try{D=JSON.parse(sessionStorage.getItem(DSK)||'null')}catch(e){}
+ try{O=JSON.parse(localStorage.getItem(OK)||'null')}catch(e){}
+ if(L&&typeof L==='object'){
+   if(Array.isArray(L.order)&&!L.dp){L.alone=true;L.mpt=4}
+   if(L.drawDone&&L.drawKind==='official'&&!O){O=pick(L,DK);try{localStorage.setItem(OK,JSON.stringify(O))}catch(e){}}
+   DK.forEach(k=>delete L[k]);S=Object.assign(S,L)}
+ const dr=D&&Array.isArray(D.order)?D:O&&Array.isArray(O.order)?O:null;if(dr)Object.assign(S,dr);
+}
+const save=()=>{const st={},dr={};for(const k in S)(DK.includes(k)?dr:st)[k]=S[k];
+  try{localStorage.setItem('icb26-v3',JSON.stringify(st))}catch(e){}
+  try{sessionStorage.setItem(DSK,JSON.stringify(dr))}catch(e){}
+  if(S.drawDone&&S.drawKind==='official'){try{localStorage.setItem(OK,JSON.stringify(dr))}catch(e){}}};
+const dropOfficial=()=>{try{localStorage.removeItem(OK)}catch(e){}};
 const quickDraw=mode=>{const pool=mode==='quota'?[...shuffle(HOME),...shuffle(AWAY)]:shuffle(T.map(t=>t.id));return pool.map((id,i)=>({id,g:i%2?'B':'A'}))};
 const split=order=>({A:order.filter(o=>o.g==='A').map(o=>o.id),B:order.filter(o=>o.g==='B').map(o=>o.id)});
-if(!S.final){S.final={mode:'quota',...split(quickDraw('quota'))};save()}
+/* ---------- slots: A1..A6, B1..B6 stand in for teams until the draw fills them ---------- */
+const SLOTS={A:[1,2,3,4,5,6].map(i=>'A'+i),B:[1,2,3,4,5,6].map(i=>'B'+i)};
+const slotTeam=sid=>{const g=sid[0],ids=S.order.filter(o=>o.g===g).map(o=>o.id);return ids[+sid.slice(1)-1]||null};
+for(const g of ['A','B'])for(const sid of SLOTS[g])by[sid]={id:sid,slot:1,g,h:1,
+  get n(){const t=slotTeam(sid);return t?by[t].n:'Team '+sid},get w(){const t=slotTeam(sid);return t?by[t].w:sid},
+  get s(){const t=slotTeam(sid);return t?by[t].s:sid},get c(){const t=slotTeam(sid);return t?by[t].c:'Group '+g}};
+const slotFinal=()=>({mode:'slots',slots:1,A:SLOTS.A.slice(),B:SLOTS.B.slice()});
+const isSlots=()=>!!(S.final&&S.final.slots);
+if(!S.drawDone||!S.final||!Array.isArray(S.final.A))S.final=slotFinal();
 
 /* ---------- wheel ---------- */
 const C=250,R=228,RH=56;
@@ -663,7 +864,7 @@ const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- spin ---------- */
 function spin(){
-  const p=pool();if(!isAdmin||spinning||p.length<2||!$('#intro').hidden)return;
+  const p=pool();if(spinning||p.length<2||!$('#intro').hidden)return;
   audio();spinning=true;$('#spin').disabled=true;$('#wheel').classList.add('spinning');$('#call').textContent='';
   const n=p.length,a=360/n,w=Math.floor(Math.random()*n),c=w*a+a/2+(Math.random()-.5)*a*.3,R1=reduced();
   const D1=R1?1500:19500+Math.random()*3000,D2=R1?0:3400;
@@ -741,40 +942,41 @@ function groupsHTML(order,newId,hold,gs){
   }).join('');
 }
 function renderGroups(newId,hold){
-  if(S.order.length===12){const sp=split(S.order);if(!S.final||S.final.A.join()!==sp.A.join()||S.final.B.join()!==sp.B.join()){S.final={mode:S.mode,...sp};S.res={}}if(!S.drawDone)S.drawKind=offi?'official':'test';S.drawDone=true;save()}
+  if(S.order.length===12){const sp=split(S.order);if(!S.final||S.final.A.join()!==sp.A.join()||S.final.B.join()!==sp.B.join()){S.final={mode:S.mode,...sp};S.res={}}if(!S.drawDone)S.drawKind=!isAdmin?'practice':offi?'official':'test';S.drawDone=true;save()}
+  else if(!isSlots()){S.final=slotFinal();S.res={};S.drawDone=false;save()}
   $('#gA').innerHTML=grpHTML(S.order,'A',newId,hold);$('#gB').innerHTML=grpHTML(S.order,'B',newId,hold);
 }
 function showFinale(){$('#fingroups').innerHTML=groupsHTML(S.order);$('#fin').hidden=false;finale();confetti('#ffc23d');setTimeout(()=>confetti('#41e06f'),500)}
 // Draws are TEST draws until the official draw night (Fri 4 Dec, Hamburg time); an admin can switch this.
 const DRAWDAY=Date.UTC(2026,11,3,23);let offi=Date.now()>=DRAWDAY;
 function offiUI(){const b=$('#official');b.setAttribute('aria-pressed',String(offi));b.textContent=offi?'Official draw':'Test draw'}
-$('#official').addEventListener('click',()=>{if(!isAdmin)return;offi=!offi;if(S.drawDone){S.drawKind=offi?'official':'test';save()}offiUI();route()});
-function resetDraw(){S.order=[];S.drawDone=false;S.drawKind='';rot=0;spinning=false;save();$('#call').textContent='';renderDrawView()}
+$('#official').addEventListener('click',()=>{if(!isAdmin)return;offi=!offi;if(S.drawDone){S.drawKind=offi?'official':'test';if(!offi)dropOfficial();save()}offiUI();const ih=$('#intro').hidden;route();$('#intro').hidden=ih});
+function resetDraw(){if(S.drawKind==='official'){if(!isAdmin)return;dropOfficial()}S.order=[];S.drawDone=false;S.drawKind='';S.final=slotFinal();S.res={};if(S.team&&S.team.length===2)S.team='MAP';rot=0;spinning=false;save();$('#call').textContent='';renderDrawView()}
 function renderDrawView(){
   offiUI();
+  const lock=!isAdmin&&S.drawDone&&S.drawKind==='official';['#spin','#instant','#reset'].forEach(q=>$(q).hidden=lock);
   $$('#mode button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===S.mode)));
   renderWheel();renderPot();renderGroups();
-  $('#intro').hidden=!isAdmin||S.order.length>0;
-  if(!isAdmin){const done=S.drawDone||S.order.length===12;if(done&&S.order.length<12){S.order=['A','B'].flatMap(g=>S.final[g].map(id=>({id,g})));}
-    $('#call').innerHTML=done?'':'<span class="pubnote">The organisers run the draw live on draw night. Groups appear here as they are drawn.</span>';
-    if(done){$('#gA').innerHTML=grpHTML(S.order,'A');$('#gB').innerHTML=grpHTML(S.order,'B')}}
+  $('#intro').hidden=S.order.length>0;
+  $('#introp').textContent=isAdmin?'Group stage draw':'অনুশীলনের ড্র · শুধু আপনার ডিভাইসে';$('#go').textContent=isAdmin?'Start the draw':'ড্র ঘুরিয়ে দেখুন';
+  if(!isAdmin&&!S.order.length&&!spinning)$('#call').innerHTML='<span class="pubnote">নিজে একবার ড্র করে দেখুন। ফল দেখা যাবে লাইভ ও ম্যাচ সূচিতে, শুধু এই ডিভাইসে। আসল ড্র শুক্রবার, ৪ ডিসেম্বর।</span>';
   const p=pool();if(p.length===1&&!spinning&&$('#intro').hidden){spinning=true;$('#spin').disabled=true;setTimeout(()=>land(p[0],true),700)}
 }
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||spinning||!isAdmin)return;S.mode=b.dataset.m;resetDraw()});
 $('#spin').addEventListener('click',spin);
 $('#go').addEventListener('click',()=>{audio();$('#intro').hidden=true;whoosh()});
-$('#reset').addEventListener('click',()=>{if(!spinning&&isAdmin)resetDraw()});
-$('#instant').addEventListener('click',()=>{if(spinning||!isAdmin)return;S.order=quickDraw(S.mode);save();$('#call').textContent='';renderDrawView()});
+$('#reset').addEventListener('click',()=>{if(!spinning)resetDraw()});
+$('#instant').addEventListener('click',()=>{if(spinning)return;S.order=quickDraw(S.mode);save();$('#call').textContent='';renderDrawView()});
 const sndUI=()=>{const b=$('#snd');b.setAttribute('aria-pressed',String(!S.muted));b.textContent=S.muted?'Sound off':'Sound on'};sndUI();
 const toggleSnd=()=>{S.muted=!S.muted;save();sndUI();if(!S.muted){audio();tick(1)}};
 $('#snd').addEventListener('click',toggleSnd);
 const toggleFs=()=>{const el=$('#v-draw');try{const p=document.fullscreenElement?document.exitFullscreen():el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}};
 $('#fs').addEventListener('click',toggleFs);
 $('#finclose').addEventListener('click',()=>{$('#fin').hidden=true});
-$('#finsched').addEventListener('click',()=>{$('#fin').hidden=true;location.hash='schedule'});
+$('#finsched').addEventListener('click',()=>{$('#fin').hidden=true;S.team='MAP';save();location.hash='fixtures'});
 document.addEventListener('keydown',e=>{
   if($('#v-draw').hidden||['SELECT','INPUT'].includes(e.target.tagName))return;
-  if(e.key===' '&&e.target.tagName!=='BUTTON'){e.preventDefault();if(!isAdmin)return;if(!$('#intro').hidden)$('#go').click();else spin()}
+  if(e.key===' '&&e.target.tagName!=='BUTTON'){e.preventDefault();if(!$('#tour').hidden)return;if(!$('#intro').hidden)$('#go').click();else spin()}
   else if(e.key==='f'||e.key==='F')toggleFs();
   else if(e.key==='m'||e.key==='M')toggleSnd();
   else if(e.key==='Escape')$('#fin').hidden=true;
@@ -853,7 +1055,7 @@ function ensurePlan(){
   if(!d.ex){d.ex={A:exFor(d.A),B:exFor(d.B)};d.plan=null}
   const key=planKey();
   if(!d.plan||d.plan.key!==key){d.plan={...planFor(d,n,d.ex,S.avail,140,25),key};save()}
-  if(!d.plan.off){d.plan.off=assignOfficials(d.plan.slots,d,d.plan.sp);save()}
+  if(!d.plan.off){d.plan.off=d.slots?d.plan.slots.map(sl=>sl.map(()=>({u:null,s:null}))):assignOfficials(d.plan.slots,d,d.plan.sp);save()}
   return d.plan;
 }
 function assignOfficials(slots,d,sp){
@@ -883,6 +1085,7 @@ const KO={A:[{id:'SF1',l:'Semi 1',v:'A1 v B2',d:[]},{id:'SF2',l:'Semi 2',v:'B1 v
 KO.C=[...QF,{id:'PS1',l:'Plate semi 1',v:'A5 v B6',d:[],pl:1},{id:'PS2',l:'Plate semi 2',v:'B5 v A6',d:[],pl:1},KO.B[4],KO.B[5],{id:'PF',l:'Plate final',v:'',d:['PS1','PS2'],pl:1},FIN];
 const KOINFO={A:{t:'A. Top 2',s:'4 teams play on Day 2'},B:{t:'B. Top 4',s:'8 teams play on Day 2'},C:{t:'C. Cup + Plate',s:'All 12 play on Day 2'}};
 const DAYS=[{l:'Sat 26 Dec'},{l:'Sun 27 Dec'}];
+const koLab=v=>v.replace(/\b([AB])(\d)\b/g,'$2$1');
 const hm=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 function build(d,o){
   const P=S.dp,pl=ensurePlan(),G=pl.slots.length,G1=Math.min(P.d1,G),seq=[];
@@ -912,7 +1115,7 @@ const verdict=r=>r.spare0<0?{c:'bad',t:`Day 1 ${-r.spare0} min late`}:r.spare<0?
 function cell(m){
   if(!m)return '<div class="m free"></div>';
   if(m.k==='g'){const[a,b]=m.p;return `<div class="m"><b class="gt ${m.g.toLowerCase()}">${m.g}</b>${logo(a,26)}<span class="nm">${by[a].s}</span><i>v</i><span class="nm">${by[b].s}</span>${logo(b,26)}</div>`}
-  return `<div class="m ko${m.pl?' pl':''}${m.fin?' fnl':''}"><span>${m.l}</span>${m.v?`<small>${m.v}</small>`:''}</div>`;
+  return `<div class="m ko${m.pl?' pl':''}${m.fin?' fnl':''}"><span>${m.l}</span>${m.v?`<small>${koLab(m.v)}</small>`:''}</div>`;
 }
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const OPT=()=>({fmt:S.fmt,len:+S.len,ch:+S.ch,alone:S.alone});
@@ -1081,12 +1284,84 @@ async function shareMoM(row){const k=row.dataset.k,r=S.res[k]||{},msg=row.queryS
   if(dlNS){try{await dlNS.save({filename:fn,data:blob});say(copied?'Poster saved, caption copied: post it on Facebook.':'Poster saved.');return}catch(e){if(e&&e.code==='declined'){say('Download cancelled.');return}}}
   if(!window.claude){plainDownload(blob,fn);say(copied?'Poster saved, caption copied: post it on Facebook.':'Poster saved.');return}
   const u=URL.createObjectURL(blob),w=window.open(u,'_blank');say(w?(copied?'Poster opened in a new tab, caption copied.':'Poster opened in a new tab.'):'Long-press or right-click to save: pop-ups are blocked.')}
+
+const TROPHY=`<svg class="trophy" viewBox="0 0 240 330" role="img" aria-label="ICB 2026 trophy"><defs>
+<linearGradient id="tGold" x1="0" x2="1"><stop offset="0" stop-color="#4a3005"/><stop offset=".18" stop-color="#a66f12"/><stop offset=".38" stop-color="#f4c24a"/><stop offset=".5" stop-color="#fff1bd"/><stop offset=".62" stop-color="#f0bb3c"/><stop offset=".84" stop-color="#9a6510"/><stop offset="1" stop-color="#3d2804"/></linearGradient>
+<linearGradient id="tSil" x1="0" x2="1"><stop offset="0" stop-color="#3f454d"/><stop offset=".25" stop-color="#9aa6b3"/><stop offset=".48" stop-color="#ffffff"/><stop offset=".62" stop-color="#cfd8e2"/><stop offset=".85" stop-color="#6c7682"/><stop offset="1" stop-color="#2e3339"/></linearGradient>
+<radialGradient id="tBall" cx=".36" cy=".3" r=".78"><stop offset="0" stop-color="#ffc4b4"/><stop offset=".2" stop-color="#f0563e"/><stop offset=".52" stop-color="#b3161f"/><stop offset=".82" stop-color="#5e0810"/><stop offset="1" stop-color="#2a0306"/></radialGradient>
+<linearGradient id="tBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a313c"/><stop offset=".12" stop-color="#151a21"/><stop offset="1" stop-color="#050709"/></linearGradient>
+<linearGradient id="tBaseS" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".14"/><stop offset=".36" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="tShine" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="tShadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<filter id="tBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<clipPath id="tBallClip"><circle cx="120" cy="104" r="40"/></clipPath>
+</defs>
+<ellipse cx="120" cy="318" rx="92" ry="9" fill="url(#tShadow)"/>
+<path d="M54 266h132l6 44a6 6 0 0 1-6 6H54a6 6 0 0 1-6-6z" fill="url(#tBase)"/>
+<path d="M54 266h132l6 44a6 6 0 0 1-6 6H54a6 6 0 0 1-6-6z" fill="url(#tBaseS)"/>
+<rect x="50" y="262" width="140" height="6" rx="2" fill="url(#tGold)"/>
+<rect x="84" y="281" width="72" height="22" rx="3" fill="url(#tGold)"/>
+<rect x="86.5" y="283.5" width="67" height="17" rx="2" fill="none" stroke="#5a3c06" stroke-opacity=".55"/>
+<text x="120" y="297" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="800" font-style="italic" font-size="13" letter-spacing=".5" fill="#3a2805">ICB 2026</text>
+<path d="M70 262c4-10 18-16 50-16s46 6 50 16z" fill="url(#tGold)"/>
+<path d="M104 247c2-30 6-58 9-86h14c3 28 7 56 9 86z" fill="url(#tGold)"/>
+<ellipse cx="120" cy="196" rx="13" ry="4" fill="url(#tGold)"/>
+<path d="M119 214C96 204 78 180 79 150c6 13 15 21 26 24-8-13-9-29-2-43 5 24 13 39 21 49z" fill="url(#tGold)"/>
+<path d="M121 214c23-10 41-34 40-64-6 13-15 21-26 24 8-13 9-29 2-43-5 24-13 39-21 49z" fill="url(#tGold)"/>
+<path d="M120 226c-11-20-12-44 0-70 12 26 11 50 0 70z" fill="url(#tSil)"/>
+<circle cx="120" cy="104" r="40" fill="url(#tBall)"/>
+<g clip-path="url(#tBallClip)" fill="none">
+<path d="M80 92c20 26 60 26 80 0" stroke="url(#tGold)" stroke-width="3"/>
+<path d="M80 100c20 26 60 26 80 0" stroke="url(#tGold)" stroke-width="3"/>
+<path d="M82 89c20 26 58 26 78 0" stroke="#fff3c4" stroke-width="1.2" stroke-dasharray="2 3" stroke-opacity=".9"/>
+<path d="M82 103c20 26 58 26 78 0" stroke="#fff3c4" stroke-width="1.2" stroke-dasharray="2 3" stroke-opacity=".9"/>
+<rect class="shine" x="44" y="50" width="22" height="110" fill="url(#tShine)" opacity=".7" transform="rotate(20 55 105)"/>
+</g>
+<ellipse cx="104" cy="86" rx="12" ry="7" fill="#fff" opacity=".75" filter="url(#tBlur)" transform="rotate(-30 104 86)"/>
+<circle cx="120" cy="104" r="39.5" fill="none" stroke="#ffd0c4" stroke-opacity=".22"/>
+<path class="tw" d="M40 52l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#fff3c4"/><path class="tw d2" d="M196 120l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" fill="#fff3c4"/><path class="tw d3" d="M178 40l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff3c4"/>
+</svg>`;
+
+/* ---------- fixtures: tournament map (FIFA-style skeleton that fills during the draw) ---------- */
+function mapSide(x,st){
+  if(x.t)return `<div class="bs${x.w?' w':''}">${logo(x.t,26)}<span>${esc(by[x.t].s)}</span></div>`;
+  const mm=/^(\d)([AB])$/.exec(x.lab);if(mm)return `<div class="bs"><b class="pos ${mm[2].toLowerCase()}">${x.lab}</b><i>${mm[2]} গ্রুপের ${['১ম','২য়','৩য়','৪র্থ'][+mm[1]-1]||bn(mm[1])}</i></div>`;
+  const ww=/^Winner (\w+)$/.exec(x.lab);if(ww)return `<div class="bs"><b class="pos">${ww[1]}</b><i>জয়ী</i></div>`;
+  return `<div class="bs"><i>${esc(x.lab)}</i></div>`;
+}
+function mapMatch(m,st,when,fin){
+  const r=S.res['K:'+m.id]||{},sd=koSides(m,st).map(x=>({...x,w:!!(x.t&&r.w===x.t)}));
+  return `<div class="bk glass${fin?' fnl':''}"><small><span>${fin?'ফাইনাল':m.l}</span>${when?`<em>${when}</em>`:''}</small>${sd.map(x=>mapSide(x,st)).join('')}</div>`;
+}
+function renderMap(){
+  const st=standings(),all=matchesAll(),K=KO[S.fmt]||KO.B,get=id=>K.find(m=>m.id===id);
+  const when={};all.forEach(s=>s.m.forEach((m,fi)=>{if(m&&m.k==='ko')when[m.id]=`রবি ${hm(s.t)} · মাঠ ${bn(fi+1)}`}));
+  const n=S.order.length,done=S.drawDone,last=n?S.order[n-1].id:null;
+  const status=done?(S.drawKind==='official'?'<span class="mst" style="color:var(--green)"><i></i>অফিশিয়াল ড্র সম্পন্ন</span>':`<span class="mst"><i></i>${S.drawKind==='practice'?'আপনার অনুশীলনের ড্র':'টেস্ট ড্র'}</span>`)
+    :n?`<span class="mst run"><i></i>ড্র চলছে · ১২টির মধ্যে ${bn(n)}টি দল</span>`:'<span class="mst"><i></i>ড্র হবে শুক্রবার, ৪ ডিসেম্বর</span>';
+  const grp=g=>{const ids=done?S.final[g]:SLOTS[g];return `<div class="mgp glass ${g.toLowerCase()}" style="--gc:${GC[g]}"><h3>Group ${g}</h3>${ids.map((id,i)=>{const t=done?id:slotTeam(id);
+    return `<div class="mrow${t&&t===last&&!done?' new':''}"><span class="sl">${g}${i+1}</span>${t?`${logo(t,32)}<b>${esc(by[t].s)}</b>`:'<span class="ph"></span>'}</div>`}).join('')}</div>`};
+  const sf1=get('SF1'),sf2=get('SF2'),fin=get('F'),qL=(sf1.d||[]).map(get).filter(Boolean),qR=(sf2.d||[]).map(get).filter(Boolean);
+  const qcol=(qs,r)=>qs.length?`<div class="qcol${r?' r':''}${qs.length===2?' two':''}">${qs.map(m=>mapMatch(m,st,when[m.id])).join('')}</div>`:'';
+  const scol=(m,r,solo)=>`<div class="scol${r?' r':''}${solo?' solo':''}">${mapMatch(m,st,when[m.id])}</div>`;
+  const br=qL.length?`${qcol(qL)}${scol(sf1)}<div class="fcol"><div class="tro">${TROPHY}</div>${mapMatch(fin,st,when.F,1)}</div>${scol(sf2,1)}${qcol(qR,1)}`
+    :`<div></div>${scol(sf1,0,1)}<div class="fcol"><div class="tro">${TROPHY}</div>${mapMatch(fin,st,when.F,1)}</div>${scol(sf2,1,1)}<div></div>`;
+  const cnt={g:0,QF:0,SF:0,F:0,o:0};all.forEach(s=>s.m.forEach(m=>{if(!m)return;if(m.k==='g')cnt.g++;else if(/^QF/.test(m.id))cnt.QF++;else if(/^SF/.test(m.id))cnt.SF++;else if(m.id==='F')cnt.F++;else cnt.o++}));
+  const tot=Object.values(cnt).reduce((a,b)=>a+b,0);
+  $('#fxmap').innerHTML=`<div class="mhd"><h2>টুর্নামেন্টের ছক</h2>${status}</div>
+    <div class="mgrid">${grp('A')}<div class="mbr">${br}</div>${grp('B')}</div>
+    <div class="mfoot glass"><div class="mcount"><span><b>${bn(cnt.g)}</b>গ্রুপ ম্যাচ</span>${cnt.QF?`<span><b>${bn(cnt.QF)}</b>কোয়ার্টার ফাইনাল</span>`:''}<span><b>${bn(cnt.SF)}</b>সেমিফাইনাল</span>${cnt.o?`<span><b>${bn(cnt.o)}</b>প্লেট ম্যাচ</span>`:''}<span><b>${bn(cnt.F)}</b>ফাইনাল</span><span class="tot"><b>${bn(tot)}</b>মোট ম্যাচ</span></div>
+    <button class="spin fsb" type="button" data-t="ALL">Full schedule</button>${done?'':'<p class="mnote">ড্রয়ের আগে Full schedule-এ দলের জায়গায় A1, B2… থাকবে। ড্র শেষ হলেই দল, সময় আর মাঠ চূড়ান্ত।</p>'}</div>`;
+}
+$('#fxmap').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;S.team=b.dataset.t;save();renderTeams();scrollTo({top:0,behavior:reduced()?'auto':'smooth'})});
 let posterCv=null,posterUrl=null;
 async function renderTeams(){
-  if(!S.team||(S.team!=='ALL'&&!by[S.team]))S.team='ALL';
-  const d=S.final;
-  $('#picker').innerHTML=`<button type="button" class="pk all" data-t="ALL" aria-pressed="${S.team==='ALL'}"><span class="allic">31</span><span>All matches</span></button>`+['A','B'].flatMap(g=>d[g].map(id=>`<button type="button" class="pk" data-t="${id}" style="--gc:${GC[g]}" aria-pressed="${id===S.team}">${logo(id,46)}<span>${by[id].s}</span></button>`)).join('');
-  $('#allfx').hidden=S.team!=='ALL';$('#tview').hidden=S.team==='ALL';
+  const d=S.final,sl=isSlots();
+  if(!S.team||(S.team!=='ALL'&&S.team!=='MAP'&&(sl||![...d.A,...d.B].includes(S.team))))S.team='MAP';
+  const nAll=matchesAll().reduce((n,x)=>n+x.m.filter(Boolean).length,0);
+  $('#picker').innerHTML=`<button type="button" class="pk" data-t="MAP" aria-pressed="${S.team==='MAP'}"><span class="mapic"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h5v4H3zM3 15h5v4H3zM16 10h5v4h-5zM8 7h3v10H8M11 12h5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="bn">ছক</span></button><button type="button" class="pk all" data-t="ALL" aria-pressed="${S.team==='ALL'}"><span class="allic">${nAll}</span><span class="bn">সব ম্যাচ</span></button>`+['A','B'].flatMap(g=>d[g].map(id=>`<button type="button" class="pk" data-t="${id}" style="--gc:${GC[g]}" aria-pressed="${id===S.team}"${sl?' disabled title="ড্রয়ের পর"':''}>${logo(id,46)}<span>${esc(by[id].s)}</span></button>`)).join('');
+  $('#fxmap').hidden=S.team!=='MAP';$('#allfx').hidden=S.team!=='ALL';$('#tview').hidden=S.team==='ALL'||S.team==='MAP';
+  if(S.team==='MAP'){renderMap();return}
   if(S.team==='ALL'){renderAllFixtures();return}
   const id=S.team,fx=fixturesFor(id);
   const tn=$('#tname');tn.textContent=by[id].n;tn.style.color='';
@@ -1098,7 +1373,7 @@ async function renderTeams(){
   if(S.team!==id)return;
   posterCv.toBlob(b=>{if(!b)return;if(posterUrl)URL.revokeObjectURL(posterUrl);posterUrl=URL.createObjectURL(b);$('#poster').src=posterUrl},'image/png');
 }
-$('#picker').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;S.team=b.dataset.t;save();const h=S.team==='ALL'?'fixtures':'team-'+S.team.toLowerCase();if(location.hash!=='#'+h)location.hash=h;else renderTeams()});
+$('#picker').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;S.team=b.dataset.t;save();const h=S.team.length>2?'fixtures':'team-'+S.team.toLowerCase();if(location.hash!=='#'+h)location.hash=h;else renderTeams()});
 // Outside Claude (e.g. GitHub Pages) a normal browser download works.
 function plainDownload(blob,fn){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
 let dlNS;(async()=>{try{dlNS=await window.claude?.use?.('downloads')}catch(e){dlNS=null}if(!dlNS&&window.claude){$('#dl').hidden=true;$('#dlmsg').textContent='Right-click or long-press the poster to save it.'}})();
@@ -1152,7 +1427,7 @@ function standings(){
 function koSides(m,st){
   const groupDone=st.played===st.total,pos={};['A','B'].forEach(g=>st[g].forEach((r,i)=>pos[g+(i+1)]=r.t));
   const win=id=>{const r=S.res['K:'+id];return r&&r.w&&r.w!=='N'?r.w:null};
-  const tok=x=>{x=x.trim();let mm=/^([AB])(\d)$/.exec(x);if(mm)return {lab:x,t:groupDone?pos[x]:null};mm=/^W (\w+)$/.exec(x);if(mm)return {lab:'Winner '+mm[1],t:win(mm[1])};return {lab:x,t:null}};
+  const tok=x=>{x=x.trim();let mm=/^([AB])(\d)$/.exec(x);if(mm)return {lab:mm[2]+mm[1],t:groupDone?pos[x]:null};mm=/^W (\w+)$/.exec(x);if(mm)return {lab:'Winner '+mm[1],t:win(mm[1])};return {lab:x,t:null}};
   if(m.v)return m.v.split(' v ').map(tok);
   return m.d.map(id=>({lab:'Winner '+id,t:win(id)}));
 }
@@ -1196,7 +1471,7 @@ function renderLive(){
     if(!main)return `<div class="fcard"><div class="fh"><b>Field ${fi+1}</b></div><p class="empty">No more matches on this field.</p></div>`;
     const r=S.res[keyOf(main.m)]||{},sd=sidesOf(main.m,st),gc=main.m.k==='g'?GC[main.m.g]:'#ff7a1a';
     const label=main.m.k==='g'?`Group ${main.m.g}`:main.m.l,stt=cur?'live':(r.st||'');
-    return `<div class="fcard" style="--fc:${gc}"><div class="fh"><b>Field ${fi+1}</b><span class="st ${stt}">${cur?'Live now':stt==='delayed'?'Delayed':'Next up'}</span></div>
+    return `<div class="fcard" style="--fc:${gc}"><div class="fh"><b>Field ${fi+1}</b>${S.drawKind==='official'?'':'<span class="exm">উদাহরণ</span>'}<span class="st ${stt}">${cur?'Live now':stt==='delayed'?'Delayed':'Next up'}</span></div>
       <div class="vs2">${teamBlock(sd[0])}<span class="v">v</span>${teamBlock(sd[1])}</div>
       <div class="meta"><span>${DAYS[main.s.day].l.split(' ')[0]} ${hm(main.s.t)} · ${label}</span>${r.url&&/^https:\/\//.test(r.url)?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Live score on CricHeroes</a>`:''}</div>
       ${next?`<div class="nx">Then <b>${hm(next.s.t)}</b> ${sidesOf(next.m,st).map(x=>esc(x.t?by[x.t].s:x.lab)).join(' v ')}</div>`:''}</div>`}).join('');
@@ -1222,7 +1497,7 @@ function renderTable(){
 }
 
 /* ---------- fixtures (all) ---------- */
-function offLine(x){const pl=ensurePlan();if(x.m.k!=='g'||x.s.gi==null)return x.m.k==='ko'?'Officials: assigned at the table check':'';const fi=x.s.m.indexOf(x.m),o=(pl.off[x.s.gi]||[])[fi];if(!o)return '';const nm=offNames();const u=nm.get(x.s.gi+'-'+fi);return `Officials: ${esc(u.u.join(', '))} (${esc(o.u?by[o.u].s:'TBD')}) · Scorer: ${esc(u.s)} (${esc(o.s?by[o.s].s:'TBD')})`}
+function offLine(x){if(isSlots())return x.m.k==='g'?'Officials: assigned after the draw':'';const pl=ensurePlan();if(x.m.k!=='g'||x.s.gi==null)return x.m.k==='ko'?'Officials: assigned at the table check':'';const fi=x.s.m.indexOf(x.m),o=(pl.off[x.s.gi]||[])[fi];if(!o)return '';const nm=offNames();const u=nm.get(x.s.gi+'-'+fi);return `Officials: ${esc(u.u.join(', '))} (${esc(o.u?by[o.u].s:'TBD')}) · Scorer: ${esc(u.s)} (${esc(o.s?by[o.s].s:'TBD')})`}
 function renderAllFixtures(){
   const st=standings(),all=matchesAll();
   $('#allfx').innerHTML=[0,1].map(di=>{const rows=all.filter(s=>s.day===di).flatMap(s=>s.m.map((m,fi)=>m?{s,m,fi}:null).filter(Boolean));
@@ -1232,6 +1507,7 @@ function renderAllFixtures(){
 
 /* ---------- admin: results ---------- */
 function renderResults(){
+  if(isSlots()){$('#reslist').innerHTML='<div class="acard wide predraw"><h3>Results open after the draw</h3><p class="fine" style="margin:0">Right now the schedule shows slots (A1 v A3). Once the draw is done, every match is here, ready for scores.</p></div>';return}
   const st=standings(),all=matchesAll();
   $('#reslist').innerHTML=[0,1].map(di=>`<h3 class="rday">${DAYS[di].l}</h3>`+all.filter(s=>s.day===di).flatMap(s=>s.m.map((m,fi)=>m?{s,m,fi}:null).filter(Boolean)).map(x=>{
     const k=keyOf(x.m),r=S.res[k]||{},sd=sidesOf(x.m,st),ready=sd.every(z=>z.t);
@@ -1282,16 +1558,18 @@ function offNames(){
   return map;
 }
 function renderOfficials(){
+  if(isSlots()){$('#offsum').innerHTML='';$('#offlist').innerHTML='<div class="acard wide predraw"><h3>Officials come after the draw</h3><p class="fine" style="margin:0">Who officiates depends on who plays when, so duties are assigned the moment the 12 teams are drawn. Add the names below now.</p></div>';renderRoster();return}
   const pl=ensurePlan(),d=S.final,all=matchesAll(),nm=offNames(),sp=pl.sp;
   const plays=i=>new Set((pl.slots[i]||[]).flatMap(m=>m.p)),cnt={},adj={};
   const aft={};pl.off.forEach((row,i)=>row.forEach(o=>{const bef=new Set(i+1!==sp?plays(i+1):[]),af=new Set(i!==sp?plays(i-1):[]);for(const t of [o.u,o.s]){if(!t)continue;cnt[t]=(cnt[t]||0)+1;if(bef.has(t))adj[t]=(adj[t]||0)+1;else if(af.has(t))aft[t]=(aft[t]||0)+1}}));
   $('#offsum').innerHTML=[...HOME,...AWAY].map(t=>`<div class="os${adj[t]?' warn':''}">${logo(t,28)}<b>${cnt[t]||0}</b>${by[t].h?'duties':'scoring'}${adj[t]?`<br>${adj[t]} right before playing`:''}</div>`).join('');
   $('#offlist').innerHTML=all.filter(s=>s.gi!=null).map(s=>s.m.map((m,fi)=>{const o=pl.off[s.gi][fi],n=nm.get(s.gi+'-'+fi),bef=new Set(s.gi+1!==sp?plays(s.gi+1):[]),af=new Set(s.gi!==sp?plays(s.gi-1):[]);
     return `<div class="oitem"><time>${hm(s.t)}<small>${DAYS[s.day].l.split(' ')[0]} · Field ${fi+1}</small></time><div class="mt"><b class="gt ${m.g.toLowerCase()}">${m.g}</b>${m.p.map(t=>esc(by[t].s)).join(' v ')}</div><div class="who2">${o.u?logo(o.u,22):''}<span>${esc(n.u.join(', '))}</span><em>${o.u?esc(by[o.u].s):''}</em>${o.u&&bef.has(o.u)?'<span class="adj">plays right after</span>':o.u&&af.has(o.u)?'<span class="adj" style="color:var(--mut)">just played</span>':''}</div><div class="who2">${o.s?logo(o.s,22):''}<span>${esc(n.s)}</span><em>scorer</em></div></div>`}).join('')).join('')+'<p class="fine">Knockout officials are picked at the table check, from teams that are out or not playing.</p>';
-  $('#roster').innerHTML=[...HOME,...AWAY].map(t=>`<label class="rs2">${logo(t,30)}<input data-t="${t}" value="${esc(S.roster[t]||'')}" placeholder="${by[t].h?'e.g. Rafi, Sumon, Tanvir':'e.g. Nayeem'}" aria-label="${esc(by[t].n)} officials"></label>`).join('');
+  renderRoster();
 }
+function renderRoster(){$('#roster').innerHTML=[...HOME,...AWAY].map(t=>`<label class="rs2">${logo(t,30)}<input data-t="${t}" value="${esc(S.roster[t]||'')}" placeholder="${by[t].h?'e.g. Rafi, Sumon, Tanvir':'e.g. Nayeem'}" aria-label="${esc(by[t].n)} officials"></label>`).join('');}
 $('#roster').addEventListener('change',e=>{const t=e.target.dataset.t;if(!t)return;S.roster[t]=e.target.value.slice(0,200);save();renderOfficials()});
-$('#reoff').addEventListener('click',()=>{const pl=ensurePlan();pl.off=assignOfficials(pl.slots,S.final,pl.sp);save();renderOfficials()});
+$('#reoff').addEventListener('click',()=>{if(isSlots())return;const pl=ensurePlan();pl.off=assignOfficials(pl.slots,S.final,pl.sp);save();renderOfficials()});
 
 /* ---------- admin: planner ---------- */
 const AVO=[0,540,600,660,720];
@@ -1299,6 +1577,7 @@ function renderPlanner(){
   $('#avail').innerHTML=[...AWAY,...HOME].map(t=>`<label class="av${S.avail[t]?' set':''}">${logo(t,28)}${esc(by[t].s)}<select data-t="${t}" aria-label="${esc(by[t].n)} earliest start">${AVO.map(v=>`<option value="${v}"${(S.avail[t]||0)===v?' selected':''}>${v?'From '+hm(v):'Any time'}</option>`).join('')}</select></label>`).join('');
   const pl=ensurePlan(),m=metrics(pl.slots,pl.off,pl.T,pl.sp,S.avail),ck=(ok,t)=>`<li class="${ok?'ok':'bad'}"><b>${ok?'✓':'!'}</b>${t}</li>`;
   const nAv=Object.values(S.avail).filter(Boolean).length;
+  if(isSlots())$('#plnow').innerHTML='<li class="ok"><b>…</b>Checks run on the real groups, right after the draw. Arrival limits you set now are applied then.</li>';else
   $('#plnow').innerHTML=ck(m.av===0,nAv?(m.av?`${m.av} match slot${m.av>1?'s':''} break an arrival limit`:`All ${nAv} arrival limit${nAv>1?'s':''} respected`):'No arrival limits set')+ck(m.sat,'Saturday 08:00: Hamburg teams open both fields')+ck(m.sun,'Sunday first slot: Hamburg teams on both fields')+ck(m.b2b===0,m.b2b?`${m.b2b} back-to-back matches`:'Nobody plays twice in a row')+ck(m.adj<=12,`${m.adj} of 48 duties fall right before the team's own match`);
   $$('#plmode button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===S.plmode)));
   renderOdds();
@@ -1358,31 +1637,83 @@ $('#logout').addEventListener('click',()=>{isAdmin=false;try{sessionStorage.remo
 $('#lvfs').addEventListener('click',()=>{const el=$('#v-live');try{const p=document.fullscreenElement?document.exitFullscreen():el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}});
 $('#rulesfs').addEventListener('click',()=>{const el=$('#rulesframe');try{const p=el.requestFullscreen();if(p&&p.catch)p.catch(()=>{})}catch(e){}});
 
+/* ---------- home ---------- */
+const BN='০১২৩৪৫৬৭৮৯',bn=n=>String(n).replace(/\d/g,d=>BN[d]);
+const FACTS=[[12,'দল'],[6,'শহর'],[108,'খেলোয়াড় মাঠে','৯ জন করে'],[31,'ম্যাচ'],[2,'মাঠ'],[2,'দিন']];
+const ANN0=['গ্রুপ ড্র হবে শুক্রবার, ৪ ডিসেম্বর।','খেলা ২৬ ও ২৭ ডিসেম্বর, হারবুর্গে। প্রথম বল মাঠে গড়াবে সকাল ৮টায়।','নিয়মকানুন একবার দেখে নিন: সব আছে Rules ট্যাবে।'];
+function tickHome(){const el=$('#homecd');if(!el||$('#v-home').hidden)return;const ms=KICK()-Date.now();
+  if(ms<=0){el.innerHTML='<div class="go"><b>খেলা চলছে</b></div>';return}
+  const c=cdParts(ms),p=v=>String(v).padStart(2,'0');
+  el.innerHTML=`<div><b>${c.d}</b><small>দিন</small></div><div><b>${p(c.h)}</b><small>ঘণ্টা</small></div><div><b>${p(c.m)}</b><small>মিনিট</small></div><div class="s"><b>${p(c.s)}</b><small>সেকেন্ড</small></div>`;
+  el.setAttribute('aria-label',`${c.d} days ${c.h} hours ${c.m} minutes to the first ball`)}
+setInterval(tickHome,1000);
+let factsDone=false;
+function renderHome(){
+  tickHome();
+  $('#facts').innerHTML=FACTS.map(([n,l,sub])=>`<div class="glass fact"><b data-n="${n}">${factsDone?bn(n):bn(0)}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</div>`).join('');
+  if(!factsDone){factsDone=true;const els=$$('#facts b'),t0=performance.now(),D=reduced()?1:1400;const step=now=>{const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,3);els.forEach(b=>b.textContent=bn(Math.round(+b.dataset.n*e)));if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+  const list=S.ann||ANN0.map(t=>({t}));
+  $('#annlist').innerHTML=list.length?list.map((a,i)=>`<div class="ann1"><i></i><p>${esc(a.t)}</p>${isAdmin?`<button class="bx" type="button" data-i="${i}" aria-label="Remove announcement">✕</button>`:''}</div>`).join(''):'<p class="fine">এখনো কোনো ঘোষণা নেই।</p>';
+  $('#annadd').hidden=!isAdmin;
+}
+$('#annadd').addEventListener('submit',e=>{e.preventDefault();const t=$('#anntext').value.trim();if(!t)return;S.ann=S.ann||ANN0.map(x=>({t:x}));S.ann.unshift({t:t.slice(0,160),at:Date.now()});$('#anntext').value='';save();renderHome()});
+$('#annlist').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b||!isAdmin)return;S.ann=S.ann||ANN0.map(x=>({t:x}));S.ann.splice(+b.dataset.i,1);save();renderHome()});
+
+/* ---------- first-visit guide ---------- */
+const TOUR=[
+  {sel:'#homecd',h:'স্বাগতম!',p:'টুর্নামেন্টের কাউন্টডাউন আর সব ঘোষণা এখানেই।',go:'home'},
+  {sel:'nav a[data-v=draw]',h:'নিজে ড্র করে দেখুন',p:'চাকা ঘুরিয়ে একটি অনুশীলনের ড্র করুন। ফল থাকবে শুধু আপনার ডিভাইসে।'},
+  {sel:'nav a[data-v=fixtures]',h:'আপনার দলের ম্যাচ',p:'দুই গ্রুপ আর নকআউটের পুরো ছক। দলের লোগোতে চাপলে সময়, মাঠ আর প্রতিপক্ষ, সাথে পোস্টার।'},
+  {sel:'nav a[data-v=live]',h:'লাইভ আর টেবিল',p:'খেলার দিন স্কোর, পরের ম্যাচ আর পয়েন্ট টেবিল এক জায়গায়।'},
+  {sel:'#adminlink',h:'আয়োজকদের জন্য',p:'আয়োজক দলের সদস্যরা এখানে লগ ইন করবেন। ইউজারনেম ও পাসওয়ার্ড দেওয়া আছে BlastBhai স্লাইড ডেকে।'}];
+let ti=0;
+function placeTour(){const st=TOUR[ti],el=document.querySelector(st.sel),sp=$('#tspot'),cd=$('#tcard');
+  $('#tstep').textContent=bn(ti+1)+' / '+bn(TOUR.length);$('#ttitle').textContent=st.h;$('#tbody').textContent=st.p;$('#tnext').textContent=ti===TOUR.length-1?'শুরু করি':'পরের';
+  if(!el||el.hidden||!el.getClientRects().length){sp.style.cssText='opacity:0';cd.style.cssText='left:50%;top:50%;transform:translate(-50%,-50%)';return}
+  el.scrollIntoView({block:'nearest'});const r=el.getBoundingClientRect(),pad=8;
+  sp.style.cssText=`left:${r.left-pad}px;top:${r.top-pad}px;width:${r.width+pad*2}px;height:${r.height+pad*2}px`;
+  const cw=Math.min(340,innerWidth-32),below=r.bottom+pad+16+180<innerHeight;
+  let left=Math.min(Math.max(16,r.left+r.width/2-cw/2),innerWidth-cw-16);
+  cd.style.cssText=`width:${cw}px;left:${left}px;top:${below?r.bottom+pad+14:Math.max(16,r.top-pad-14-190)}px`;}
+function showTour(){ti=0;if(location.hash.slice(1)!=='home'&&location.hash)location.hash='home';$('#tour').hidden=false;requestAnimationFrame(placeTour);setTimeout(()=>$('#tnext').focus(),60)}
+function endTour(){$('#tour').hidden=true;try{localStorage.setItem('bbTour','1')}catch(e){}}
+function startTourOnce(){let seen=false;try{seen=localStorage.getItem('bbTour')==='1'}catch(e){}if(!seen&&!isAdmin&&!location.hash.startsWith('#team-'))setTimeout(showTour,900)}
+$('#tnext').addEventListener('click',()=>{if(ti>=TOUR.length-1){endTour();return}ti++;placeTour()});
+$('#tskip').addEventListener('click',endTour);
+$('#retour').addEventListener('click',showTour);
+document.addEventListener('keydown',e=>{if($('#tour').hidden)return;if(e.key==='Escape')endTour();else if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();$('#tnext').click()}});
+addEventListener('resize',()=>{if(!$('#tour').hidden)placeTour()});
+
 /* ---------- routing ---------- */
 const FBURL='https://tally.so/r/jePDvJ';
-const PUBV=['live','draw','fixtures','table','rules'],ADMINV=['results','schedule','officials','planner','setup'];
-const SEC={live:'v-live',draw:'v-draw',fixtures:'v-teams',table:'v-table',rules:'v-rules',results:'v-results',schedule:'v-schedule',officials:'v-officials',planner:'v-odds',setup:'v-admin'};
+const PUBV=['home','live','draw','fixtures','table','rules'],ADMINV=['results','schedule','officials','planner','setup'];
+const SEC={home:'v-home',live:'v-live',draw:'v-draw',fixtures:'v-teams',table:'v-table',rules:'v-rules',results:'v-results',schedule:'v-schedule',officials:'v-officials',planner:'v-odds',setup:'v-admin'};
 function route(){
   const h=location.hash.slice(1),tm=/^team-([a-z]{2})$/.exec(h);
   if(tm&&by[tm[1].toUpperCase()])S.team=tm[1].toUpperCase();
-  let v=tm?'fixtures':h==='teams'?'fixtures':h==='admin'?'results':(PUBV.includes(h)||ADMINV.includes(h))?h:'live';
-  if((ADMINV.includes(v)||v==='draw')&&!isAdmin){if(viewPub&&signedIn()){setPublicView(false);return}openLogin(v);v='live'}
-  $('nav a[data-v=draw]').hidden=!isAdmin;$('#pubbar').hidden=!viewPub;
+  let v=tm?'fixtures':h==='teams'?'fixtures':h==='admin'?'results':(PUBV.includes(h)||ADMINV.includes(h))?h:'home';
+  if(ADMINV.includes(v)&&!isAdmin){if(viewPub&&signedIn()){setPublicView(false);return}openLogin(v);v='home'}
+  $('#pubbar').hidden=!viewPub;
   for(const [k,id] of Object.entries(SEC))$('#'+id).hidden=k!==v;
   $('#subnav').hidden=!isAdmin;$('#adminlink').hidden=isAdmin;
   $$('nav a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   $$('#subnav a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-  const pst=!S.drawDone?'ex':S.drawKind==='official'?'':'test',pv=$('#preview');
-  pv.hidden=!pst||v==='draw'||v==='rules';pv.className='preview'+(pst==='test'?' test':'');
-  pv.textContent=pst==='ex'?'Example only: the groups are drawn on Fri 4 Dec. Teams, groups and times below will change.':pst==='test'?'TEST DRAW: these groups are a test by the organisers, not official. The official draw is on Fri 4 Dec.':'';
+  const pst=!S.drawDone?'ex':S.drawKind==='official'?'':S.drawKind==='practice'?'practice':'test',pv=$('#preview');
+  pv.hidden=!pst||v==='draw'||v==='rules'||v==='home';pv.className='preview'+(pst==='test'?' test':pst==='practice'?' practice':'');
+  pv.textContent=pst==='ex'?(S.order.length?`ড্র চলছে: ১২টির মধ্যে ${bn(S.order.length)}টি দল জায়গা পেয়েছে।`:'ড্র এখনো হয়নি (শুক্রবার, ৪ ডিসেম্বর)। তাই দলের জায়গায় এখন A1, B2… দেখা যাচ্ছে।'):pst==='practice'?'আপনার অনুশীলনের ড্র: শুধু এই ডিভাইসে দেখা যাচ্ছে। আসল ড্র শুক্রবার, ৪ ডিসেম্বর।':pst==='test'?'TEST DRAW: these groups are a test by the organisers, not official. The official draw is on Fri 4 Dec.':'';
+  document.body.dataset.ex=pst?'1':'';
   $('#v-draw').classList.toggle('pub',!isAdmin);
   $('#fbk').href=FBURL+'?source=app&screen='+encodeURIComponent((viewPub?'public-':isAdmin?'admin-':'')+v);
   if(v!=='draw')$('#intro').hidden=true;
-  if(v==='draw')renderDrawView();else if(v==='live')renderLive();else if(v==='table')renderTable();else if(v==='rules'){const f=$('#rulesframe');if(!f.src)f.src='rules/index.html'}
+  if(v==='draw')renderDrawView();else if(v==='home')renderHome();else if(v==='live')renderLive();else if(v==='table')renderTable();else if(v==='rules'){const f=$('#rulesframe');if(!f.src)f.src='rules/index.html'}
   else if(v==='fixtures')renderTeams();else if(v==='results')renderResults();else if(v==='officials')renderOfficials();else if(v==='planner')renderPlanner();else if(v==='setup')renderAdmin();else renderSched();
 }
+// Feedback button gets out of the way while reading: hides on scroll down, returns on scroll up, at the end of the page, or after a pause.
+{let lastY=scrollY,idle;addEventListener('scroll',()=>{const y=scrollY,b=$('#fbk'),end=innerHeight+y>=document.documentElement.scrollHeight-40;
+  if(y>lastY+6&&y>80&&!end)b.classList.add('away');else if(y<lastY-6||end)b.classList.remove('away');lastY=y;clearTimeout(idle);idle=setTimeout(()=>b.classList.remove('away'),1400)},{passive:true})}
 window.addEventListener('hashchange',route);
 route();
+startTourOnce();
 }
 </script>
 </body>

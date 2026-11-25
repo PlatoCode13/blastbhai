@@ -1,0 +1,9 @@
+# Cloudflare Pages project config (used by `wrangler pages dev` and deploys)
+name = "blastbhai"
+pages_build_output_dir = "site"
+compatibility_date = "2026-11-01"
+
+# Later: shared live data
+# [[kv_namespaces]]
+# binding = "ICB_KV"
+# id = "<from Cloudflare dashboard>"

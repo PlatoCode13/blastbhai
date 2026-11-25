@@ -1,0 +1,16 @@
+# Cloudflare Pages headers
+# App page: always check for a new version, so pushes show up at once
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/rules/index.html
+  Cache-Control: no-cache
+# Images: cache for a day
+/logos/*
+  Cache-Control: public, max-age=86400
+/brand/*
+  Cache-Control: public, max-age=86400
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
